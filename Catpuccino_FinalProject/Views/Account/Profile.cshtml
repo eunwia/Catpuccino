@@ -1,0 +1,96 @@
+﻿@model Catpuccino_FinalProject.Models.User
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "_Layout"; 
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="~/css/profile.css" />
+
+<div class="container profile-container">
+    <form asp-controller="Account" asp-action="EditProfile" method="post" enctype="multipart/form-data" class="d-flex gap-4">
+        <input type="hidden" asp-for="Id" />
+        
+        <div class="card-base">
+            <div id="image-container">
+                <img src="~/images/userpics/@(string.IsNullOrEmpty(Model.ProfilePicture) ? "UserDefault.png" : Model.ProfilePicture)" 
+                     class="profile-pic" alt="Profile Picture" />
+            </div>
+
+            <div id="logout-section">
+                <a asp-controller="User" asp-action="Login" class="btn-logout">
+                    Logout <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                </a>
+            </div>
+
+            <div id="upload-section" style="display:none;">
+                <input type="file" id="imageUpload" name="imageFile" style="display:none;" accept="image/*" />
+                <button type="button" class="btn-upload" onclick="document.getElementById('imageUpload').click();">
+                    Upload Picture
+                </button>
+            </div>
+        </div>
+
+        <div class="card-base" style="max-width: 550px; align-items: flex-start;">
+            
+            <div class="display-mode info-section">
+                <p class="info-label">Name: <span class="info-value">@Model.Username</span></p>
+                <p class="info-label">Email: <span class="info-value">@Model.Email</span></p>
+                <p class="info-label">Pass: <span class="info-value">***</span></p>
+                
+                <div class="text-center w-100" style="margin-top: 40px;">
+                    <button type="button" onclick="toggleEdit()" class="btn-edit-save">
+                        Edit <i class="fa-solid fa-pencil"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="edit-mode info-section">
+                <div class="info-label" style="justify-content: space-between;">
+                    <span>Name:</span>
+                    <input asp-for="Username" class="edit-input" />
+                </div>
+                
+                <div class="info-label" style="justify-content: space-between;">
+                    <span>Email:</span>
+                    <input asp-for="Email" class="edit-input" />
+                </div>
+                
+                <div class="info-label" style="justify-content: space-between;">
+                    <span>Pass:</span>
+                    <input name="Password" type="password" class="edit-input" placeholder="********" />
+                </div>
+                
+                <div class="text-center w-100" style="margin-top: 30px;">
+                    <button type="submit" class="btn-edit-save">Save Changes</button>
+                    <br />
+                    <a href="javascript:void(0)" onclick="toggleEdit()" class="text-muted mt-3 d-inline-block" style="text-decoration:none;">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function toggleEdit() {
+        var displayDiv = document.querySelector('.display-mode');
+        var editDiv = document.querySelector('.edit-mode');
+        var logoutSec = document.getElementById('logout-section');
+        var uploadSec = document.getElementById('upload-section');
+
+        if (displayDiv.style.display === "none") {
+            // Switch to VIEW MODE
+            displayDiv.style.display = "block";
+            editDiv.style.display = "none";
+            logoutSec.style.display = "block";
+            uploadSec.style.display = "none";
+        } else {
+            // Switch to EDIT MODE
+            displayDiv.style.display = "none";
+            editDiv.style.display = "block";
+            logoutSec.style.display = "none";
+            uploadSec.style.display = "block";
+        }
+    }
+</script>

@@ -1,0 +1,100 @@
+﻿body {
+    font-family: 'Jua', sans-serif;
+    background-color: #FDF5E6;
+}
+
+.profile-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 50px;
+    padding: 20px;
+}
+
+.card-base {
+    background: white;
+    border-radius: 30px;
+    padding: 60px 40px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    width: 100%;
+    max-width: 420px;
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-pic {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 40px;
+}
+
+.info-section {
+    width: 100%;
+    padding-left: 20px;
+}
+
+.info-label {
+    color: #80512F;
+    font-size: 1.8rem;
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.info-value {
+    color: #6a4227;
+    font-weight: normal;
+}
+
+.edit-input {
+    background-color: #E6E6E6 !important;
+    border: none !important;
+    border-radius: 50px !important;
+    padding: 0.5rem 1.5rem !important;
+    color: #80512F !important;
+    height: 45px;
+    width: 240px;
+}
+
+.btn-logout {
+    background-color: #7a2e0e;
+    color: white;
+    border-radius: 50px;
+    padding: 12px 50px;
+    border: none;
+    font-size: 1.5rem;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+.btn-upload {
+    background-color: #C19277;
+    color: white;
+    border-radius: 50px;
+    padding: 12px 35px;
+    border: none;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+}
+
+.btn-edit-save {
+    background-color: #80512F;
+    color: white;
+    border-radius: 50px;
+    padding: 12px 80px;
+    border: none;
+    font-size: 1.6rem;
+    transition: 0.3s;
+    margin-top: 20px;
+}
+
+.edit-mode {
+    display: none;
+    width: 100%;
+}

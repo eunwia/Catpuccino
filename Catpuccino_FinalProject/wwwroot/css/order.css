@@ -1,0 +1,113 @@
+﻿:root {
+    --cat-cream: #FDF5E6;
+    --cat-brown: #7B4B2A;
+    --cat-light-brown: #D2B48C;
+    --cat-green: #2D7D46;
+}
+
+.order-page-wrapper{
+    background-color:var(--cat-cream);
+    min-height:100vh;
+    margin-top:-24px;
+}
+
+/* Empty State Styling */
+.no-orders-container {
+    padding: 10px 0;
+    text-align: center;
+    color: var(--cat-light-brown);
+}
+
+.no-orders-img {
+    max-width: 500px;
+    opacity: 0.8;
+    margin-bottom: 20px;
+}
+
+/* Ensure the header blends in perfectly */
+.order-history-header {
+    background-color: var(--cat-cream);
+    padding: 60px 0 0;
+    border-radius: 0; /* Remove radius since the whole page is cream now */
+}
+
+.history-title {
+    font-size: 3.5rem;
+    color: var(--cat-brown);
+    font-weight: normal;
+}
+
+.history-subtitle {
+    color: var(--cat-light-brown);
+    font-size: 1.1rem;
+}
+
+/* Order Card Styling */
+.order-history-card {
+    background-color: transparent;
+    border: 2px solid var(--cat-brown);
+    border-radius: 30px;
+    padding: 25px;
+    height: 100%;
+    color: var(--cat-brown);
+}
+
+.order-date {
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.order-label {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+}
+
+/* Status Badges */
+.status-badge {
+    border-radius: 20px;
+    padding: 5px 25px;
+    font-size: 0.9rem;
+    color: white;
+    display: inline-block;
+}
+
+.status-pending {
+    background-color: var(--cat-brown);
+}
+
+.status-done {
+    background-color: var(--cat-green);
+}
+
+/* Table-like structure for items */
+.order-items-list {
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.item-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.qty-header {
+    font-size: 0.8rem;
+    color: var(--cat-light-brown);
+    text-align: right;
+}
+
+/* Total Section */
+.order-divider {
+    border-top: 2px solid var(--cat-brown);
+    margin: 15px 0;
+    opacity: 1;
+}
+
+.order-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 2rem;
+}

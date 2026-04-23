@@ -1,0 +1,136 @@
+﻿@model Catpuccino_FinalProject.Models.ProductsPageViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Products";
+    bool showModal = Model.ShowAddModal;
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="~/css/adminProduct.css" />
+
+<button class="btn-add" onclick="openAddModal()">+ Add Product</button>
+
+<div class="add-modal-overlay @(showModal ? "show" : "")" id="addProductModal">
+    <div class="add-modal">
+        <h2 class="modal-title">Create New Listing</h2>
+        <form asp-action="AddProduct" asp-controller="Admin" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            
+            <div class="modal-row">
+                <div class="modal-field">
+                    <label class="field-label">PRODUCT NAME</label>
+                    <input asp-for="NewProduct.Name" class="field-input" placeholder="e.g. Catpuccino Espresso" />
+                    <span asp-validation-for="NewProduct.Name" class="text-danger small"></span>
+                </div>
+                <div class="modal-field" style="flex: 0 0 140px;">
+                    <label class="field-label">PRICE (₱)</label>
+                    <input asp-for="NewProduct.Price" class="field-input" type="number" step="0.01" />
+                    <span asp-validation-for="NewProduct.Price" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="modal-field">
+                <label class="field-label">CATEGORY</label>
+                <select asp-for="NewProduct.Category" class="field-input">
+                    <option value="">-- Choose Category --</option>
+                    <option value="COFFEE">Coffee</option>
+                    <option value="TEA">Tea</option>
+                    <option value="PASTRIES">Pastries</option>
+                    <option value="CAKES">Cakes</option>
+                </select>
+            </div>
+
+            <div class="modal-field">
+                <label class="field-label">DESCRIPTION</label>
+                <textarea asp-for="NewProduct.Description" class="field-textarea" rows="3"></textarea>
+            </div>
+
+            <div class="modal-field">
+                <label class="field-label">PRODUCT PHOTO</label>
+                <label class="photo-upload-area">
+                    <input asp-for="NewProduct.Photo" type="file" style="display:none" onchange="previewPhoto(this)" />
+                    <span id="photoText"><i class="fa-solid fa-cloud-arrow-up"></i> Upload Image</span>
+                    <img id="photoPreview" src="" style="display:none; max-height:100px; border-radius:8px; margin-top:5px;" />
+                </label>
+            </div>
+
+            <div class="d-flex gap-3 mt-3">
+                <button type="button" class="btn-cancel" onclick="closeAddModal()">CANCEL</button>
+                <button type="submit" class="btn-save-product">SAVE PRODUCT</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row g-4 mt-2">
+    @if (Model.Products != null && Model.Products.Any())
+    {
+        @foreach (var p in Model.Products)
+        {
+            <div class="col-md-6 col-lg-4 col-xl-3">
+                <div class="product-card">
+                    <span class="product-badge">@p.Category</span>
+                    <img src="@(string.IsNullOrEmpty(p.ImageUrl) ? "/images/default-product.png" : p.ImageUrl)" />
+                    <div class="product-body">
+                        <div class="product-name">@p.Name</div>
+                        <p class="product-desc">@p.Description</p>
+                        <div class="product-footer pt-3">
+                            <span class="product-price">₱ @p.Price.ToString("F2")</span>
+                            <button class="btn-delete" onclick="confirmDelete('@p.Id')">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+<div class="delete-modal-overlay" id="deleteModal">
+    <div class="add-modal" style="max-width: 350px; text-align: center;">
+        <i class="fa-solid fa-circle-exclamation" style="font-size: 3rem; color: #A65D57; margin-bottom: 1rem;"></i>
+        <p style="font-size: 1.2rem; color: #80512F;">Delete this listing?</p>
+        <form id="deleteForm" method="post">
+            @Html.AntiForgeryToken()
+            <div class="d-flex gap-2 mt-4">
+                <button type="submit" class="btn-save-product" style="background:#A65D57">YES</button>
+                <button type="button" class="btn-cancel" style="background:#2F8039" onclick="closeDeleteModal()">NO</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function openAddModal() { document.getElementById('addProductModal').classList.add('show'); }
+        function closeAddModal() { document.getElementById('addProductModal').classList.remove('show'); }
+        
+        function confirmDelete(id) {
+            document.getElementById('deleteForm').action = '/Admin/DeleteProduct/' + id;
+            document.getElementById('deleteModal').classList.add('show');
+        }
+        function closeDeleteModal() { document.getElementById('deleteModal').classList.remove('show'); }
+
+        function previewPhoto(input) {
+            const preview = document.getElementById('photoPreview');
+            const text = document.getElementById('photoText');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    text.style.display = 'none';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            if (event.target.classList.contains('add-modal-overlay')) closeAddModal();
+            if (event.target.classList.contains('delete-modal-overlay')) closeDeleteModal();
+        }
+    </script>
+    <partial name="_ValidationScriptsPartial" />
+}

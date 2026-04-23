@@ -1,0 +1,89 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<link rel="stylesheet" href="~/css/home.css" />
+
+<header class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-5 text-center text-md-start">
+                <img src="~/images/homepics/logo.png" alt="Catpuccino Logo" class="img-fluid mb-1" style="max-width: 600px; margin-top:-80px;" asp-append-version="true" />
+                <p class="text-brown">'Paws, purrs, and perfect brews.'</p>
+
+                <a asp-controller="Menu" asp-action="Menus" class="btn btn-browse shadow-sm">
+                    Browse Menu
+                </a>
+            </div>
+
+            <div class="col-md-7 text-end">
+                <img src="~/images/homepics/catillus.png" alt="Cat Illustration" class="img-fluid" asp-append-version="true" />
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container overlapping-gallery mb-5">
+    <div class="row g-4">
+        <div class="col-md-4 ">
+            <img src="~/images/homepics/first.png" class="img-fluid card-img-custom w-100" alt="Cafe Interior" asp-append-version="true" />
+        </div>
+        <div class="col-md-4">
+            <img src="~/images/homepics/second.png" class="img-fluid card-img-custom w-100" alt="Iced Coffee" asp-append-version="true" />
+        </div>
+        <div class="col-md-4">
+            <img src="~/images/homepics/third.png" class="img-fluid card-img-custom w-100" alt="Coffee and Croissants" asp-append-version="true" />
+        </div>
+    </div>
+</main>
+
+<section class="container text-center my-5 pt-5">
+    <h2 class="experience-title mb-0">Coffee to Cuddles</h2>
+    <p class="experience-subtitle mb-5">Your Catpuccino Experience</p>
+
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="exp-card">
+                <img src="~/images/homepics/check.png" alt="Check Icon" class="exp-icon" asp-append-version="true" />
+                <p class="exp-text">Check in /<br>reservation</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="exp-card">
+                <img src="~/images/homepics/coffee.png" alt="Coffee Icon" class="exp-icon" asp-append-version="true" />
+                <p class="exp-text">Order your<br>drinks</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="exp-card">
+                <img src="~/images/homepics/cat.png" alt="Cat Icon" class="exp-icon" asp-append-version="true" />
+                <p class="exp-text">Enter cat<br>lounge</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="exp-card">
+                <img src="~/images/homepics/rules.png" alt="Rules Icon" class="exp-icon" asp-append-version="true" />
+                <p class="exp-text">Follow house<br>rules</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="bg-cream-section">
+    <section class="container text-center reminders-section my-5">
+        <h2 class="experience-title mb-0">Friendly Reminders</h2>
+        <p class="experience-subtitle mb-4">For a happy and safe space, please treat our cats with love and care.</p>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <img src="~/images/homepics/reminders.png"
+                     alt="Cat Cafe Friendly Reminders"
+                     class="reminders-img"
+                     asp-append-version="true" />
+            </div>
+        </div>
+    </section>
+</div>

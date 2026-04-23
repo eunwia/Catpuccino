@@ -1,0 +1,110 @@
+﻿@{
+    ViewData["Title"] = "AboutUs";
+}
+
+<link rel="stylesheet" href="~/css/about.css" asp-append-version="true" />
+
+<header class="about-hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start">
+                <h1 class="about-title">About Us</h1>
+                <p class="abouttext-brown">
+                    Catpuccino is a cozy haven where coffee lovers and cat enthusiasts come together to relax, 
+                    unwind, and connect with our friendly cat companions!
+                </p>
+
+                <a asp-controller="Menu" asp-action="Menus" class="btn btn-browse shadow-sm">
+                    Browse Menu
+                </a>
+            </div>
+
+            <div class="col-md-6 text-end">
+                <img src="~/images/aboutpics/aboutillus.png"
+                     alt="About Illustration"
+                     class="img-fluid about-illus-img"
+                     asp-append-version="true" />
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="container overlapping-gallery mb-5">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <img src="~/images/aboutpics/first.png"
+                 class="img-fluid card-img-custom w-100"
+                 alt="Cafe Environment"
+                 asp-append-version="true" />
+        </div>
+        <div class="col-md-4">
+            <img src="~/images/aboutpics/second.png"
+                 class="img-fluid card-img-custom w-100"
+                 alt="Interaction with Cats"
+                 asp-append-version="true" />
+        </div>
+        <div class="col-md-4">
+            <img src="~/images/aboutpics/third.png"
+                 class="img-fluid card-img-custom w-100"
+                 alt="Cats at the Cafe"
+                 asp-append-version="true" />
+        </div>
+    </div>
+</main>
+<section class="container my-5 py-5 text-center">
+    <h2 class="section-title">Meet Our Cats</h2>
+
+    <p class="cat-section-description">
+        Our cats are the heart of Catpuccino. Each one has a unique personality—from playful and
+        energetic to calm and cuddly.
+    </p>
+
+    <div class="cat-grid-container">
+        <div class="row g-4 row-cols-1 row-cols-md-3 justify-content-center">
+
+            <div class="col">
+                <div class="cat-profile-card shadow-sm">
+                    <img src="~/images/aboutpics/kala.png" class="cat-img" alt="Kala" asp-append-version="true">
+                    <p class="cat-name">Kala</p>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="cat-profile-card shadow-sm">
+                    <img src="~/images/aboutpics/mochi.png" class="cat-img" alt="Mochi" asp-append-version="true">
+                    <p class="cat-name">Mochi</p>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="cat-profile-card shadow-sm">
+                    <img src="~/images/aboutpics/snuggles.png" class="cat-img" alt="Snuggles" asp-append-version="true">
+                    <p class="cat-name">Snuggles</p>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="cat-profile-card shadow-sm">
+                    <img src="~/images/aboutpics/bambam.png" class="cat-img" alt="Kala" asp-append-version="true">
+                    <p class="cat-name">Bambam</p>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="cat-profile-card shadow-sm">
+                    <img src="~/images/aboutpics/luna.png" class="cat-img" alt="Mochi" asp-append-version="true">
+                    <p class="cat-name">Luna</p>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="cat-profile-card shadow-sm">
+                    <img src="~/images/aboutpics/ziba.png" class="cat-img" alt="Snuggles" asp-append-version="true">
+                    <p class="cat-name">Ziba</p>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>

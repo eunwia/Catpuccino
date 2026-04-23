@@ -1,0 +1,89 @@
+html {
+  font-size: 14px;
+}
+:root {
+    --cat-cream: #FDF5E6;
+    --cat-brown: #7B4B2A;
+    --cat-light-brown: #D2B48C;
+}
+
+.bg-cat-cream {
+    background-color: var(--cat-cream);
+    color: var(--cat-brown);
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+    font-family: 'Jua', sans-serif;
+}
+
+body {
+    margin-bottom: 0px;
+    font-family: 'Jua', sans-serif;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+/* Footer Styles */
+
+.footer-logo-text {
+    font-family: 'Jua', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+}
+
+.footer-main {
+    background-color: var(--cat-brown);
+    color: var(--cat-cream);
+    padding: 30px 0 30px 0; /* Reduced top padding */
+}
+
+/* Add this to help with centering links while keeping them left-aligned to each other */
+.footer-column-content {
+    display: inline-block;
+    text-align: left;
+}
+
+.footer-divider {
+    border-top: 1px solid rgba(253, 245, 230, 0.3);
+    margin: 0; /* Remove default margin */
+    opacity: 1;
+}
+
+.footer-heading {
+    color: var(--cat-light-brown);
+    font-family: 'Jua', sans-serif;
+    margin-bottom: 15px;
+    text-align: center; /* Ensures header is always centered */
+}
+
+.footer-link {
+    color: var(--cat-cream);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    transition: color 0.3s;
+}
+
+    .footer-link:hover {
+        color: var(--cat-light-brown);
+    }

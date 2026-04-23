@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewData["Title"] = "Register";
+    Layout = null;
+}
+
+@model Catpuccino_FinalProject.Models.User
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/register.css" />
+ 
+</head>
+<body>
+
+    <a href="/" class="back-btn" aria-label="Go back">
+        <i class="fa-solid fa-arrow-left"></i>
+    </a>
+
+    <div class="page-wrapper">
+
+        <div class="left-section">
+            <img class="cat-illustration"
+                 src="~/images/userpics/registerillus.png"
+                 alt="user cat illustration" />
+        </div>
+
+        <div class="register-card">
+            <h1>Register</h1>
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div asp-validation-summary="All" class="validation-summary"></div>
+            }
+
+            <form asp-controller="User" asp-action="Register" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <input asp-for="Username"
+                           class="form-control"
+                           placeholder="Username" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input asp-for="Password"
+                           type="password"
+                           class="form-control"
+                           placeholder="Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    @* Confirm password doesn't need asp-for if it's just for UI check *@
+                    <input type="password"
+                           class="form-control"
+                           placeholder="Confirm Password"
+                           required />
+                </div>
+
+                <button type="submit" class="btn-login">Register</button>
+                <div class="form-group mt-3">
+                    Do you have an Account? <a asp-controller="User" asp-action="Login">Login Now</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+</body>
+</html>
+
+
+

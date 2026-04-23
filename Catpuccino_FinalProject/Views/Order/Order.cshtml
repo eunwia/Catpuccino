@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewData["Title"] = "Order";
+}
+<link rel="stylesheet" href="~/css/order.css" asp-append-version="true" />
+
+<div class="order-page-wrapper">
+    <header class="order-history-header text-center">
+        <div class="container">
+            <h1 class="history-title">Order History</h1>
+            <p class="history-subtitle">Track your orders, and check your past transactions</p>
+        </div>
+    </header>
+
+    <main class="container py-1">
+        @if (Model != null && Model.Any())
+        {
+            <div class="row g-4 row-cols-1 row-cols-md-2">
+                @foreach (var order in Model)
+                {
+                    <div class="col">
+                        <div class="order-history-card shadow-sm bg-white">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <div class="order-date">@order.Date</div>
+                                    <div class="order-label">Order</div>
+                                </div>
+                                <div class="status-badge @(order.Status == "Pending" ? "status-pending" : "status-done")">
+                                    @order.Status
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="no-orders-container">
+                <img src="~/images/orderpics/noorderillus.png" alt="No Orders" class="no-orders-img" />
+            </div>
+        }
+    </main>
+</div>

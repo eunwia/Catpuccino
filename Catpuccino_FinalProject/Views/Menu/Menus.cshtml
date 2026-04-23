@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewData["Title"] = "Menus";
+}
+<link rel="stylesheet" href="~/css/menu.css" asp-append-version="true" />
+
+<header class="menu-hero">
+    <div class="container d-flex justify-content-between align-items-center">
+        <h1 class="menu-title">Our Menu</h1>
+
+        <div class="position-relative">
+            <button class="btn btn-order-main" data-bs-toggle="modal" data-bs-target="#orderModal">
+                Order <span class="notification-dot"></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<div class="container text-center mt-5">
+    <div class="search-container">
+        <input type="text" class="form-control search-input" placeholder="Search drinks, pastries, snacks">
+    </div>
+
+    <div class="d-flex justify-content-center flex-wrap mb-5">
+        <button class="filter-btn">All Items</button>
+        <button class="filter-btn active">Coffee</button>
+        <button class="filter-btn">Tea</button>
+        <button class="filter-btn">Pastries</button>
+        <button class="filter-btn">Cakes</button>
+    </div>
+</div>
+
+<main class="container mb-5">
+    @if (Model != null && Model.Any())
+    {
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col">
+                    <div class="card menu-card h-100">
+                        <img src="~/images/products/@item.Image" class="card-img-top" alt="@item.Name">
+                        <div class="card-body">
+                            <h5 class="card-title text-brown">@item.Name</h5>
+                            <p class="card-text small text-muted">@item.Description</p>
+                            <p class="fw-bold text-brown">P@item.Price</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="text-center empty-state">
+            <img src="~/images/menupics/waitorderillus.png" style="width: 500px;" class="mb-3" />
+        </div>
+    }
+</main>
+<div class="modal fade" id="orderModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-content-custom shadow-lg">
+
+            <div class="modal-header modal-header-custom border-0 d-flex justify-content-between">
+                <h5 class="modal-title modal-title-custom">Your Order</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body p-0">
+                <div id="cartItemsContainer">
+                    <p class="text-center text-muted py-5 italic">Your cart is currently empty.</p>
+
+                    @* When you integrate your database, you will loop through 
+                       your cart items here and generate .order-item-card divs 
+                    *@
+                </div>
+
+                <div class="order-totals">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-brown">Subtotal</span>
+                        <span class="text-brown">P0</span>
+                    </div>
+                    <div class="d-flex justify-content-between fw-bold fs-4">
+                        <span>Total</span>
+                        <span>P0</span>
+                    </div>
+                </div>
+
+                <button class="btn btn-place-order shadow-sm">Place Order</button>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,200 @@
+﻿/* ── Main UI Elements ── */
+.btn-add {
+    font-family: 'Jua', sans-serif;
+    background: #2F8039;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 0.5rem 2rem;
+    font-size: 16px;
+    cursor: pointer;
+    float: right;
+    margin-top: -5.5rem;
+    transition: background 0.2s;
+}
+
+    .btn-add:hover {
+        background: #25662d;
+    }
+
+/* ── Product Cards ── */
+.product-card {
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(128,81,47,0.12);
+    position: relative;
+    height: 100%;
+    transition: transform 0.2s;
+}
+
+    .product-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .product-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+.product-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #80512F;
+    color: #fff;
+    font-size: 0.72rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    text-transform: uppercase;
+    z-index: 10;
+}
+
+.product-body {
+    padding: 1.25rem;
+}
+
+.product-name {
+    font-size: 1.2rem;
+    color: #80512F;
+    margin-bottom: 0.4rem;
+    font-weight: bold;
+}
+
+.product-desc {
+    font-size: 0.85rem;
+    color: #B07C50;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+    height: 40px;
+    overflow: hidden;
+}
+
+.product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #F5ECD7;
+    pt-3;
+}
+
+.product-price {
+    font-size: 1.2rem;
+    color: #80512F;
+    font-weight: bold;
+}
+
+/* ── Modals ── */
+.add-modal-overlay, .delete-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+}
+
+    .add-modal-overlay.show, .delete-modal-overlay.show {
+        display: flex;
+    }
+
+.add-modal {
+    background: #fff;
+    border-radius: 25px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 550px;
+    max-height: 90vh;
+    overflow-y: auto; /* Keep scrolling functional */
+    /* This part hides the scrollbar */
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+    .add-modal::-webkit-scrollbar {
+        display: none; /* For Chrome, Safari, and newer Edge */
+    }
+
+.modal-title {
+    color: #80512F;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.modal-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.modal-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.2rem;
+    flex: 1;
+}
+
+.field-label {
+    font-size: 0.75rem;
+    color: #80512F;
+    margin-bottom: 0.4rem;
+    font-weight: bold;
+}
+
+.field-input, .field-textarea {
+    font-family: 'Jua', sans-serif;
+    border: 2px solid #F5ECD7;
+    border-radius: 12px;
+    padding: 0.7rem;
+    color: #80512F;
+    outline: none;
+}
+
+    .field-input:focus, .field-textarea:focus {
+        border-color: #80512F;
+    }
+
+.photo-upload-area {
+    border: 2px dashed #E0C9A8;
+    border-radius: 12px;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: #FFFAF3;
+}
+
+/* ── Action Buttons ── */
+.btn-save-product {
+    background: #80512F;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 0.8rem 2rem;
+    flex: 2;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    background: #A65D57;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 0.8rem 1.5rem;
+    flex: 1;
+    cursor: pointer;
+}
+
+.btn-delete {
+    background: #F5ECD7;
+    color: #80512F;
+    border: none;
+    border-radius: 10px;
+    padding: 0.5rem;
+    cursor: pointer;
+    font-size: 1.1rem;
+}

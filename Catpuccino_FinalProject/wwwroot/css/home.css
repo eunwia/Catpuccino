@@ -1,0 +1,107 @@
+﻿:root {
+    --cat-cream: #FDF5E6;
+    --cat-brown: #7B4B2A;
+    --cat-light-brown: #D2B48C;
+}
+
+.hero-section {
+    background-color: var(--cat-cream);
+    padding: 0px 0 60px 0;
+    border-radius: 0 0 50px 50px;
+    width: 100%;
+}
+
+.hero-section .row {
+    margin-top: -55px; /* Pulls the logo and cat upwards */
+}
+
+.text-brown {
+    color: var(--cat-brown);
+}
+
+.btn-browse {
+    background-color: var(--cat-brown);
+    color: white;
+    border-radius: 50px;
+    padding: 12px 30px;
+    border: none;
+}
+
+.btn-browse:hover {
+        background-color: #5d3920;
+        color: white;
+    }
+
+.card-img-custom {
+    height: 300px;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.overlapping-gallery {
+    margin-top: -220px; /* This pulls the images up into the cream background */
+    position: relative; /* Ensures it sits on top of the hero-section */
+    z-index: 10;
+}
+
+.hero-section .col-md-7 img {
+    max-width: 500px; /* Adjust this value to make it smaller or larger */
+    width: 100%; /* Ensures it stays responsive on mobile */
+    height: auto;
+    margin: 0 auto; /* Keeps it centered */
+}
+
+/* Section Titles */
+.experience-title {
+    font-size: 3rem;
+    color: var(--cat-brown);
+}
+
+.experience-subtitle {
+    color: var(--cat-light-brown);
+    letter-spacing: 1px;
+}
+
+/* Card Styling */
+.exp-card {
+    background-color: var(--cat-cream);
+    border: 2px solid var(--cat-brown);
+    border-radius: 30px;
+    padding: 40px 20px;
+    transition: transform 0.3s ease;
+    height: 100%;
+}
+
+    .exp-card:hover {
+        transform: translateY(-10px);
+    }
+
+.exp-icon {
+    width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.exp-text {
+    color: var(--cat-brown);
+    font-size: 1.1rem;
+    line-height: 1.2;
+}
+
+/* Friendly Reminders Section */
+.reminders-section {
+    padding: 60px 0;
+}
+
+.reminders-img {
+    max-width: 900px; /* Adjust based on how large you want the illustration to appear */
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+}
+
+/* ... keep your existing CSS ... */
+
+.bg-cream-section {
+    width: 100%;
+}

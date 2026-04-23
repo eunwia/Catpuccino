@@ -1,0 +1,114 @@
+﻿:root {
+    --cat-cream: #FDF5E6;
+    --cat-brown: #7B4B2A;
+    --cat-light-brown: #D2B48C;
+}
+
+/* Reusing Hero Logic */
+.about-hero {
+    background-color: var(--cat-cream);
+    padding: 0px 0 60px 0;
+    border-radius: 0 0 50px 50px;
+    width: 100%;
+}
+
+.abouttext-brown{
+    color: var(--cat-brown);
+}
+.about-hero .row{
+    margin-top: -1px;
+}
+
+.about-title {
+    font-size: 4rem; /* Larger for 'About Us' */
+    color: var(--cat-brown);
+    margin-top: 20px;
+    font-weight:normal;
+}
+
+.btn-browse {
+    background-color: var(--cat-brown);
+    color: white;
+    border-radius: 50px;
+    padding: 12px 30px;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+}
+
+    .btn-browse:hover {
+        background-color: #5d3920;
+        color: white;
+    }
+
+.overlapping-gallery {
+    margin-top: -130px;
+    position: relative;
+    z-index: 10;
+}
+
+.card-img-custom {
+    height: 300px;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.about-hero .col-md-6 img {
+    max-width: 350px; /* Adjust this value to make it smaller or larger */
+    width: 100%; /* Ensures it stays responsive on mobile */
+    height: auto;
+    margin: 0 auto; /* Keeps it centered */
+}
+
+/* Cat Profile Section */
+.cat-grid-container {
+    max-width: 1000px; /* Slightly wider to give cats room */
+    margin: 0 auto;
+}
+
+.cat-profile-card {
+    background-color: var(--cat-cream);
+    border-radius: 40px; /* High rounding for the 'pod' look */
+    padding: 20px; /* This creates the peach border around the image */
+    transition: transform 0.3s ease;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+    .cat-profile-card:hover {
+        transform: translateY(-10px);
+    }
+
+.cat-img {
+    width: 100%;
+    height: auto; /* Let the image keep its natural proportions */
+    aspect-ratio: 1 / 1; /* Keeps them perfectly square if you want */
+    object-fit: cover;
+    border-radius: 30px; /* Rounds the image itself inside the card */
+}
+
+.cat-name {
+    color: var(--cat-brown);
+    font-size: 2rem;
+    font-weight: normal;
+    margin-top: 15px; /* Space between image and name */
+    margin-bottom: 5px;
+}
+
+.section-title {
+    font-size: 3.5rem;
+    color: var(--cat-brown);
+}
+
+.cat-section-description {
+    color: var(--cat-brown) !important;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: normal;
+    margin-bottom: 3rem; /* This is the same as Bootstrap's mb-5 */
+    line-height: 1.6;
+    font-size: 1.1rem;
+}

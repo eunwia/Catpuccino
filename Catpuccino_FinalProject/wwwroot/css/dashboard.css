@@ -1,0 +1,77 @@
+﻿.stat-card {
+    background: #FFE7CD;
+    border-radius: 30px;
+    padding: 1.5rem 1.5rem;
+}
+
+.stat-label {
+    font-size: 0.78rem;
+    color: #80512F;
+    margin-bottom: 0.25rem;
+}
+
+.stat-number {
+    font-size: 2.2rem;
+    color: #80512F;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+}
+
+.stat-sub {
+    font-size: 0.72rem;
+    color: #B07C50;
+}
+
+.recent-title {
+    font-size: 2rem;
+    color: #80512F;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+}
+
+.recent-card {
+    background: #FFE7CD;
+    border-radius: 30px;
+    padding: 1.5rem;
+    margin-top: 1.75rem;
+}
+
+.orders-table tr {
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #80512F;
+}
+
+.orders-table th {
+    font-size: 0.78rem;
+    color: #80512F;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: none;
+    padding-bottom: 0.5rem;
+    background: transparent;
+}
+
+.orders-table td {
+    color: #80512F;
+    font-size: 0.9rem;
+    vertical-align: middle;
+    border-color: #E9C194;
+    border-bottom: 1px solid #80512F;
+    background: transparent;
+}
+
+.badge-done {
+    background: #2E7D32;
+    color: #fff;
+    border-radius: 50px;
+    padding: 0.3rem 1rem;
+    font-size: 0.82rem;
+}
+
+.badge-pending {
+    background: #9E9E9E;
+    color: #fff;
+    border-radius: 50px;
+    padding: 0.3rem 1rem;
+    font-size: 0.82rem;
+}

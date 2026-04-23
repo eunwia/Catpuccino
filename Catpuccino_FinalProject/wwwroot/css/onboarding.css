@@ -1,0 +1,93 @@
+﻿*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Jua', sans-serif;
+    background-color: #F5ECD7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+}
+
+/* ── LOGO ── */
+
+.brand-title img {
+    width: 680px;
+    height: 213px;
+    object-fit: contain;
+}
+
+/* ── CARDS ROW ── */
+.cards-row {
+    display: flex;
+    gap: 1.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ── ROLE CARD ── */
+.role-card {
+    background: #F5ECD7;
+    border: 2px solid #C9A882;
+    border-radius: 22px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+}
+
+    .role-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 32px rgba(128, 81, 47, 0.18);
+    }
+
+    .role-card img {
+        width: 320px;
+        height: 290px;
+        object-fit: cover;
+        object-position: center top;
+        padding: 1.5rem 1.5rem 0;
+    }
+
+.role-btn {
+    background: #80512F;
+    color: #fff;
+    font-family: 'Jua', sans-serif;
+    font-size: 1.05rem;
+    border: none;
+    border-radius: 50px;
+    padding: 0.65rem 2rem;
+    margin: 1.25rem 0 1.5rem;
+    cursor: pointer;
+    width: 80%;
+    text-align: center;
+    transition: background 0.15s;
+}
+
+.role-card:hover .role-btn {
+    background: #6a4227;
+}
+
+/* ── RESPONSIVE ── */
+@@media (max-width: 680px) {
+    .brand-logo h1 {
+        font-size: 2.5rem;
+    }
+
+    .role-card {
+        width: 260px;
+    }
+
+        .role-card img {
+            height: 230px;
+        }
+}

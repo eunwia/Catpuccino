@@ -1,0 +1,83 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Dashboard";
+}
+<link rel="stylesheet" href="~/css/dashboard.css" />
+<!-- Stat Cards -->
+<div class="row g-3">
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="stat-label">Totals Orders Today</div>
+            <div class="stat-number">@ViewBag.TotalOrders</div>
+            <div class="stat-sub">All orders receive today</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="stat-label">Pending</div>
+            <div class="stat-number">@ViewBag.PendingOrders</div>
+            <div class="stat-sub">Waiting to be prepared</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="stat-label">Completed</div>
+            <div class="stat-number">@ViewBag.CompletedOrders</div>
+            <div class="stat-sub">Orders marked as done</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <div class="stat-label">Products</div>
+            <div class="stat-number">@ViewBag.ProductCount</div>
+            <div class="stat-sub">Items in the menu</div>
+        </div>
+    </div>
+</div>
+
+<h2 class="recent-title">Recent Orders</h2>
+
+<!-- Recent Orders -->
+<div class="recent-card">
+    <table class="table orders-table">
+        <thead>
+            <tr>
+                <th>Order #</th>
+                <th>Items</th>
+                <th>Qty</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in ViewBag.RecentOrders as IEnumerable<dynamic> ?? new List<dynamic>())
+            {
+                <tr>
+                    <td><strong>@order.OrderNumber</strong></td>
+                    <td>
+                        @foreach (var item in order.Items)
+                        {
+                            <div>@item.Name</div>
+                        }
+                    </td>
+                    <td>
+                        @foreach (var item in order.Items)
+                        {
+                            <div>@item.Qty</div>
+                        }
+                    </td>
+                    <td>@order.Date.ToString("MM/dd/yy")</td>
+                    <td>P@order.Total</td>
+                    <td>
+                        <span class="@(order.Status == "Done" ? "badge-done" : "badge-pending")">
+                            @order.Status
+                        </span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

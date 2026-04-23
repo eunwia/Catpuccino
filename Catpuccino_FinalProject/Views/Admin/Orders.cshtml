@@ -1,0 +1,98 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Orders";
+    var filter = ViewBag.Filter as string ?? "All";
+}
+<link rel="stylesheet" href="~/css/adminOrders.css" />
+<h2 class="orders-title">All Orders</h2>
+
+<!-- Filter Tabs -->
+<div class="d-flex gap-2 mb-1">
+    <a asp-action="Orders" asp-route-filter="All"
+       class="filter-btn @(filter == "All" ? "active-all" : "")">All</a>
+    <a asp-action="Orders" asp-route-filter="Pending"
+       class="filter-btn @(filter == "Pending" ? "active-pending" : "")">Pending</a>
+    <a asp-action="Orders" asp-route-filter="Done"
+       class="filter-btn @(filter == "Done" ? "active-done" : "")">Done</a>
+</div>
+<div class="orders-table-card">
+    <form asp-action="SaveOrderStatuses" method="post">
+        @Html.AntiForgeryToken()
+        <table class="table orders-table">
+            <thead>
+                <tr>
+                    <th>Order #</th>
+                    <th>Items</th>
+                    <th>Qty</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int i = 0;
+                    foreach (var order in ViewBag.Orders as IEnumerable<dynamic> ?? new List<dynamic>())
+                    {
+                        <tr>
+                            <td>
+                                <strong>@order.OrderNumber</strong>
+                                <input type="hidden" name="orderIds[@i]" value="@order.Id" />
+                            </td>
+                            <td>
+                                @foreach (var item in order.Items)
+                                {
+                                    <div>@item.Name</div>
+                                }
+                            </td>
+                            <td>
+                                @foreach (var item in order.Items)
+                                {
+                                    <div>@item.Qty</div>
+                                }
+                            </td>
+                            <td>@order.Date.ToString("MM/dd/yy")</td>
+                            <td>P@order.Total</td>
+                            <td>
+                                <button type="button"
+                                        class="status-toggle pending @(order.Status == "Pending" ? "" : "d-none")"
+                                        onclick="toggleStatus(this, @i)">
+                                    Pending
+                                </button>
+                                <button type="button"
+                                        class="status-toggle done @(order.Status == "Done" ? "" : "d-none")"
+                                        onclick="toggleStatus(this, @i)">
+                                    Done
+                                </button>
+                                <input type="hidden" name="statuses[@i]" value="@order.Status" id="status_@i" />
+                            </td>
+                        </tr>
+                        i++;
+                    }
+                }
+            </tbody>
+        </table>
+        <button type="submit" class="btn-save">Save Changes</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        function toggleStatus(btn, idx) {
+            const td = btn.closest('td');
+            const pendingBtn = td.querySelector('.status-toggle.pending');
+            const doneBtn    = td.querySelector('.status-toggle.done');
+            const hidden     = document.getElementById('status_' + idx);
+            if (btn.classList.contains('pending')) {
+                pendingBtn.classList.add('d-none');
+                doneBtn.classList.remove('d-none');
+                hidden.value = 'Done';
+            } else {
+                doneBtn.classList.add('d-none');
+                pendingBtn.classList.remove('d-none');
+                hidden.value = 'Pending';
+            }
+        }
+    </script>
+}
+

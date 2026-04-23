@@ -1,0 +1,171 @@
+﻿:root {
+    --cat-cream: #FDF5E6;
+    --cat-brown: #7B4B2A;
+    --cat-light-brown: #D2B48C;
+}
+
+/* --- Header Section --- */
+.menu-hero {
+    background-color: var(--cat-cream);
+    padding: 20px 0 60px 0;
+    border-radius: 0 0 80px 80px;
+    width: 100%;
+}
+
+.menu-title {
+    font-size: 4rem;
+    color: var(--cat-brown);
+    font-weight: normal;
+}
+
+/* --- Order Button (No Hover) --- */
+.btn-order-main,
+.btn-order-main:hover,
+.btn-order-main:focus,
+.btn-order-main:active {
+    background-color: var(--cat-brown) !important;
+    color: white !important;
+    border-radius: 20px;
+    padding: 10px 30px;
+    position: relative;
+    border: none !important;
+    box-shadow: none !important; /* Removes the blue focus glow */
+    transition: none !important;
+    outline: none !important;
+}
+
+.notification-dot {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    height: 15px;
+    width: 15px;
+    background-color: #e74c3c;
+    border-radius: 50%;
+    border: 2px solid var(--cat-cream);
+}
+
+/* --- Search Bar & Filters --- */
+.search-container {
+    max-width: 900px;
+    margin: 10px auto 30px;
+}
+
+.search-input {
+    border: 1px solid var(--cat-light-brown);
+    border-radius: 15px;
+    padding: 15px 25px;
+    background-color: #fffaf5;
+    color: var(--cat-brown);
+}
+
+.filter-btn {
+    border: 1px solid var(--cat-light-brown);
+    background-color: transparent;
+    color: var(--cat-brown);
+    border-radius: 20px;
+    padding: 8px 25px;
+    margin: 5px;
+    transition: all 0.3s;
+}
+
+    .filter-btn.active, .filter-btn:hover {
+        background-color: var(--cat-brown);
+        color: white;
+    }
+
+/* --- Menu Cards --- */
+.menu-card {
+    background-color: var(--cat-cream);
+    border-radius: 30px;
+    border: none;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+/* --- Modal & Order Styling --- */
+.modal-content-custom {
+    background-color: var(--cat-cream);
+    border-radius: 30px;
+    border: none;
+    padding: 20px;
+}
+
+.modal-header-custom {
+    border-bottom: 1px solid var(--cat-light-brown);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* Force Modal Text to Brown */
+#orderModal,
+.modal-title-custom,
+.modal-body,
+.order-totals,
+.item-info h6,
+.order-totals span,
+.order-totals div {
+    color: var(--cat-brown) !important;
+}
+
+.modal-title-custom {
+    font-size: 2rem;
+    font-family: 'Jua', sans-serif;
+}
+
+/* Order Item Card */
+.order-item-card {
+    background-color: white;
+    border-radius: 20px;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item-info small {
+    color: var(--cat-light-brown);
+}
+
+.btn-circle {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 2px solid var(--cat-brown);
+    background: transparent;
+    color: var(--cat-brown);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.order-totals {
+    border-top: 1px solid var(--cat-light-brown);
+    padding-top: 15px;
+}
+
+/* --- Place Order Button (No Hover) --- */
+.btn-place-order,
+.btn-place-order:hover,
+.btn-place-order:focus,
+.btn-place-order:active {
+    background-color: var(--cat-brown) !important;
+    color: white !important;
+    width: 100%;
+    border-radius: 50px;
+    padding: 15px;
+    font-size: 1.5rem;
+    border: none !important;
+    box-shadow: none !important; /* Removes the blue focus glow */
+    transition: none !important;
+    margin-top: 20px;
+    outline: none !important;
+}
+
+/* Close Button Tint */
+.btn-close {
+    filter: sepia(1) saturate(5) hue-rotate(340deg);
+    opacity: 0.8;
+}
