@@ -35,7 +35,6 @@
 
 .info-section {
     width: 100%;
-    padding-left: 20px;
 }
 
 .info-label {
@@ -87,9 +86,9 @@
     background-color: #80512F;
     color: white;
     border-radius: 50px;
-    padding: 12px 80px;
+    padding: 12px 50px;
     border: none;
-    font-size: 1.6rem;
+    font-size: 24px;
     transition: 0.3s;
     margin-top: 20px;
 }

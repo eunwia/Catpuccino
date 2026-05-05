@@ -37,11 +37,11 @@
             <div class="display-mode info-section">
                 <p class="info-label">Name: <span class="info-value">@Model.Username</span></p>
                 <p class="info-label">Email: <span class="info-value">@Model.Email</span></p>
-                <p class="info-label">Pass: <span class="info-value">***</span></p>
+                <p class="info-label">Pass: <span class="info-value">*****</span></p>
                 
-                <div class="text-center w-100" style="margin-top: 40px;">
-                    <button type="button" onclick="toggleEdit()" class="btn-edit-save">
-                        Edit <i class="fa-solid fa-pencil"></i>
+                <div class="text-center" style="margin-top: 40px;">
+                    <button type="button" onclick="toggleEdit()" class="btn-edit-save"> 
+                        Edit <i class="fa-solid fa-pencil"></i>     
                     </button>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                     <input name="Password" type="password" class="edit-input" placeholder="********" />
                 </div>
                 
-                <div class="text-center w-100" style="margin-top: 30px;">
+                <div class="text-center">
                     <button type="submit" class="btn-edit-save">Save Changes</button>
                     <br />
                     <a href="javascript:void(0)" onclick="toggleEdit()" class="text-muted mt-3 d-inline-block" style="text-decoration:none;">Cancel</a>
