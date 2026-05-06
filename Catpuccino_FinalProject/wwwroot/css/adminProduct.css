@@ -174,8 +174,8 @@
     color: white;
     border: none;
     border-radius: 50px;
-    padding: 0.8rem 2rem;
-    flex: 2;
+    padding: 0.8rem 1.5rem;
+    flex: 1;
     cursor: pointer;
 }
 
