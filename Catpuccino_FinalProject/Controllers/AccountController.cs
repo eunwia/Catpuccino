@@ -16,13 +16,16 @@ namespace Catpuccino_FinalProject.Controllers
         // GET: Show Profile
         public IActionResult Profile()
         {
-            var user = _context.Users.FirstOrDefault(); // Just get the first user available
+            // ✅ Read logged-in user's ID from session
+            var userId = HttpContext.Session.GetInt32("UserId");
+
+            if (userId == null)
+                return RedirectToAction("Login", "User");
+
+            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
 
             if (user == null)
-            {
-                // Create a fake user just so the page doesn't crash
-                user = new User { Username = "Guest", Email = "guest@cafe.com" };
-            }
+                return RedirectToAction("Login", "User");
 
             return View(user);
         }
@@ -31,23 +34,27 @@ namespace Catpuccino_FinalProject.Controllers
         [HttpPost]
         public async Task<IActionResult> EditProfile(User updatedUser, IFormFile imageFile)
         {
-            var userInDb = _context.Users.Find(updatedUser.Id);
+            // ✅ Use session ID instead of submitted Id to prevent tampering
+            var userId = HttpContext.Session.GetInt32("UserId");
+
+            if (userId == null)
+                return RedirectToAction("Login", "User");
+
+            var userInDb = _context.Users.Find(userId);
+
             if (userInDb != null)
             {
-                // 1. Handle the Image Upload
+                // 1. Handle Image Upload
                 if (imageFile != null && imageFile.Length > 0)
                 {
-                    // Create a unique filename
                     string fileName = Guid.NewGuid().ToString() + "_" + imageFile.FileName;
                     string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/userpics", fileName);
 
-                    // Save the file to the folder
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         await imageFile.CopyToAsync(stream);
                     }
 
-                    // Save the filename to the database
                     userInDb.ProfilePicture = fileName;
                 }
 
@@ -56,7 +63,11 @@ namespace Catpuccino_FinalProject.Controllers
                 userInDb.Email = updatedUser.Email;
 
                 _context.SaveChanges();
+
+                // ✅ Update session username in case it changed
+                HttpContext.Session.SetString("Username", userInDb.Username);
             }
+
             return RedirectToAction("Profile");
         }
     }

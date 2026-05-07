@@ -1,7 +1,7 @@
 ﻿@model Catpuccino_FinalProject.Models.User
 @{
     ViewData["Title"] = "Profile";
-    Layout = "_Layout"; 
+    Layout = "_Layout";
 }
 
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet" />
@@ -14,12 +14,12 @@
         
         <div class="card-base">
             <div id="image-container">
-                <img src="~/images/userpics/@(string.IsNullOrEmpty(Model.ProfilePicture) ? "UserDefault.png" : Model.ProfilePicture)" 
+                <img src="~/images/userpics/@(string.IsNullOrEmpty(Model.ProfilePicture) ? "UserDefault.png" : Model.ProfilePicture)"
                      class="profile-pic" alt="Profile Picture" />
             </div>
 
             <div id="logout-section">
-                <a asp-controller="User" asp-action="Login" class="btn-logout">
+                <a asp-controller="User" asp-action="Logout" class="btn-logout">
                     Logout <i class="fa-solid fa-arrow-right-from-bracket"></i>
                 </a>
             </div>
@@ -40,8 +40,8 @@
                 <p class="info-label">Pass: <span class="info-value">*****</span></p>
                 
                 <div class="text-center" style="margin-top: 40px;">
-                    <button type="button" onclick="toggleEdit()" class="btn-edit-save"> 
-                        Edit <i class="fa-solid fa-pencil"></i>     
+                    <button type="button" onclick="toggleEdit()" class="btn-edit-save">
+                        Edit <i class="fa-solid fa-pencil"></i>
                     </button>
                 </div>
             </div>
@@ -80,13 +80,11 @@
         var uploadSec = document.getElementById('upload-section');
 
         if (displayDiv.style.display === "none") {
-            // Switch to VIEW MODE
             displayDiv.style.display = "block";
             editDiv.style.display = "none";
             logoutSec.style.display = "block";
             uploadSec.style.display = "none";
         } else {
-            // Switch to EDIT MODE
             displayDiv.style.display = "none";
             editDiv.style.display = "block";
             logoutSec.style.display = "none";

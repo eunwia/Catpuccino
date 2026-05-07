@@ -8,7 +8,6 @@ namespace Catpuccino_FinalProject.Controllers
     {
         private readonly AppDbContext _context;
 
-        // Dependency Injection
         public UserController(AppDbContext context)
         {
             _context = context;
@@ -22,12 +21,8 @@ namespace Catpuccino_FinalProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                
-                // Save to database
                 _context.Users.Add(user);
                 _context.SaveChanges();
-
-                // Go to login page after successful registration
                 return RedirectToAction("Login");
             }
             return View(user);
@@ -41,19 +36,28 @@ namespace Catpuccino_FinalProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Check if user exists in the database
                 var user = _context.Users.FirstOrDefault(u =>
                     u.Username == loginData.Username && u.Password == loginData.Password);
 
                 if (user != null)
                 {
-                    // Redirect to a home page or dashboard
+                    // ✅ Store logged-in user in session
+                    HttpContext.Session.SetInt32("UserId", user.Id);
+                    HttpContext.Session.SetString("Username", user.Username);
+
                     return RedirectToAction("Index", "Home");
                 }
 
                 ModelState.AddModelError("", "Invalid Username or Password.");
             }
             return View();
+        }
+
+        // ✅ Logout: clears session and redirects to login
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login");
         }
     }
 }
