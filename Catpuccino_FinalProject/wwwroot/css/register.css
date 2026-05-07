@@ -63,6 +63,7 @@ body {
 
 .form-group {
     margin-bottom: 1rem;
+    color: #754D3C;
 }
 
 .form-control {
@@ -148,6 +149,16 @@ body {
         background: rgba(128, 81, 47, 0.1);
         color: #80512F;
     }
+.register-link {
+    color: #2C160C;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+    .register-link:hover {
+        color: #fff;
+    }   
+
 
 @@media (max-width: 700px) {
     .left-section {
