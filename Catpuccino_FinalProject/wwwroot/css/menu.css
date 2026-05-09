@@ -4,7 +4,6 @@
     --cat-light-brown: #D2B48C;
 }
 
-/* --- Header Section --- */
 .menu-hero {
     background-color: var(--cat-cream);
     padding: 20px 0 60px 0;
@@ -18,7 +17,6 @@
     font-weight: normal;
 }
 
-/* --- Order Button (No Hover) --- */
 .btn-order-main,
 .btn-order-main:hover,
 .btn-order-main:focus,
@@ -29,7 +27,7 @@
     padding: 10px 30px;
     position: relative;
     border: none !important;
-    box-shadow: none !important; /* Removes the blue focus glow */
+    box-shadow: none !important; 
     transition: none !important;
     outline: none !important;
 }
@@ -45,7 +43,6 @@
     border: 2px solid var(--cat-cream);
 }
 
-/* --- Search Bar & Filters --- */
 .search-container {
     max-width: 900px;
     margin: 10px auto 30px;
@@ -74,7 +71,6 @@
         color: white;
     }
 
-/* --- Menu Cards --- */
 .menu-card {
     background-color: var(--cat-cream);
     border-radius: 30px;
@@ -83,7 +79,6 @@
     box-shadow: 0 10px 20px rgba(0,0,0,0.05);
 }
 
-/* --- Modal & Order Styling --- */
 .modal-content-custom {
     background-color: var(--cat-cream);
     border-radius: 30px;
@@ -97,7 +92,6 @@
     margin-bottom: 20px;
 }
 
-/* Force Modal Text to Brown */
 #orderModal,
 .modal-title-custom,
 .modal-body,
@@ -113,7 +107,6 @@
     font-family: 'Jua', sans-serif;
 }
 
-/* Order Item Card */
 .order-item-card {
     background-color: white;
     border-radius: 20px;
@@ -146,7 +139,6 @@
     padding-top: 15px;
 }
 
-/* --- Place Order Button (No Hover) --- */
 .btn-place-order,
 .btn-place-order:hover,
 .btn-place-order:focus,
@@ -158,14 +150,177 @@
     padding: 15px;
     font-size: 1.5rem;
     border: none !important;
-    box-shadow: none !important; /* Removes the blue focus glow */
+    box-shadow: none !important; 
     transition: none !important;
     margin-top: 20px;
     outline: none !important;
 }
 
-/* Close Button Tint */
 .btn-close {
     filter: sepia(1) saturate(5) hue-rotate(340deg);
     opacity: 0.8;
 }
+
+.text-brown {
+    color: var(--cat-brown) !important;
+}
+
+.menu-card .card-body {
+    color: var(--cat-brown);
+}
+
+.menu-card .text-muted {
+    color: #8d6e63 !important; 
+}
+
+.btn-size {
+    background-color: transparent;
+    border: 2px solid var(--cat-cream);
+    border-color: #f0e0ce;
+    border-radius: 15px;
+    padding: 10px 15px;
+    color: var(--cat-brown);
+    flex: 1;
+    text-align: center;
+    transition: all 0.2s ease-in-out;
+}
+
+    .btn-size.active {
+        background-color: var(--cat-cream);
+        border-color: var(--cat-brown);
+    }
+
+    .btn-size:hover {
+        border-color: var(--cat-brown);
+    }
+
+.btn-qty {
+    background-color: #5d3a22; 
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+    .btn-qty:hover {
+        background-color: var(--cat-brown);
+    }
+
+.btn-cancel {
+    background-color: transparent;
+    border: 2px solid #f0e0ce;
+    color: var(--cat-brown);
+    border-radius: 15px;
+    padding: 12px;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+    .btn-cancel:hover {
+        background-color: #f0e0ce;
+        border-color: var(--cat-brown);
+        color: var(--cat-brown);
+    }
+
+.btn-add-to-order {
+    background-color: #6e4626;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 12px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: 0.2s;
+}
+
+    .btn-add-to-order:hover,
+    .btn-add-to-order:focus,
+    .btn-add-to-order:active {
+        background-color: var(--cat-brown) !important;
+        color: white !important;
+    }
+
+.d-none {
+    display: none !important;
+}
+
+.btn-size-label {
+    background-color: transparent;
+    border: 2px solid #f0e0ce;
+    border-radius: 15px;
+    padding: 10px 15px;
+    color: var(--cat-brown);
+    flex: 1;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    margin: 0;
+}
+
+.size-radio:checked + .btn-size-label {
+    background-color: var(--cat-cream);
+    border-color: var(--cat-brown);
+}
+
+.btn-size-label:hover {
+    border-color: var(--cat-brown);
+}
+
+.btn-qty {
+    background-color: #6e4626; 
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+    .btn-qty:hover {
+        background-color: var(--cat-brown);
+    }
+
+.btn-cancel {
+    background-color: transparent;
+    border: 2px solid #f0e0ce;
+    color: var(--cat-brown);
+    border-radius: 15px;
+    padding: 12px;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+    .btn-cancel:hover {
+        background-color: #f0e0ce;
+        border-color: var(--cat-brown);
+        color: var(--cat-brown);
+    }
+
+.btn-add-to-order {
+    background-color: #6e4626;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 12px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: 0.2s;
+}
+
+    .btn-add-to-order:hover {
+        background-color: var(--cat-brown);
+        color: white;
+    }
