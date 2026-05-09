@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Catpuccino_FinalProject.Data;
 using Catpuccino_FinalProject.Models;
+using System.Linq;
 
 namespace Catpuccino_FinalProject.Controllers
 {
@@ -34,26 +35,28 @@ namespace Catpuccino_FinalProject.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Login(UserLoginModel loginData)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return View(loginData);
+
+            var user = _context.Users.FirstOrDefault(u =>
+                 u.Username == loginData.Username &&
+                 u.Email == loginData.Email &&
+                 u.Password == loginData.Password
+             );
+
+            if (user == null)
             {
-                var user = _context.Users.FirstOrDefault(u =>
-                    u.Username == loginData.Username && u.Password == loginData.Password);
-
-                if (user != null)
-                {
-                    // ✅ Store logged-in user in session
-                    HttpContext.Session.SetInt32("UserId", user.Id);
-                    HttpContext.Session.SetString("Username", user.Username);
-
-                    return RedirectToAction("Index", "Home");
-                }
-
-                ModelState.AddModelError("", "Invalid Username or Password.");
+                ModelState.AddModelError("", "Invalid credentials.");
+                return View(loginData);
             }
-            return View();
+
+            HttpContext.Session.SetInt32("UserId", user.Id);
+            HttpContext.Session.SetString("Username", user.Username);
+            HttpContext.Session.SetString("Email", user.Email);
+
+            return RedirectToAction("Index", "Home");
         }
 
-        // ✅ Logout: clears session and redirects to login
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
