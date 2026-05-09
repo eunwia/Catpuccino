@@ -13,10 +13,9 @@ namespace Catpuccino_FinalProject.Controllers
             _context = context;
         }
 
-        // GET: Show Profile
+        // GET: Profile
         public IActionResult Profile()
         {
-            // ✅ Read logged-in user's ID from session
             var userId = HttpContext.Session.GetInt32("UserId");
 
             if (userId == null)
@@ -30,43 +29,54 @@ namespace Catpuccino_FinalProject.Controllers
             return View(user);
         }
 
-        // POST: Update Profile
+        // POST: Edit Profile
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditProfile(User updatedUser, IFormFile imageFile)
         {
-            // ✅ Use session ID instead of submitted Id to prevent tampering
             var userId = HttpContext.Session.GetInt32("UserId");
 
             if (userId == null)
                 return RedirectToAction("Login", "User");
 
-            var userInDb = _context.Users.Find(userId);
+            var userInDb = _context.Users.FirstOrDefault(u => u.Id == userId);
 
-            if (userInDb != null)
+            if (userInDb == null)
+                return RedirectToAction("Login", "User");
+
+            // 1. Update profile image
+            if (imageFile != null && imageFile.Length > 0)
             {
-                // 1. Handle Image Upload
-                if (imageFile != null && imageFile.Length > 0)
+                string fileName = Guid.NewGuid().ToString() + "_" + imageFile.FileName;
+                string filePath = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot/images/userpics",
+                    fileName
+                );
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                    string fileName = Guid.NewGuid().ToString() + "_" + imageFile.FileName;
-                    string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/userpics", fileName);
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await imageFile.CopyToAsync(stream);
-                    }
-
-                    userInDb.ProfilePicture = fileName;
+                    await imageFile.CopyToAsync(stream);
                 }
 
-                // 2. Update other fields
-                userInDb.Username = updatedUser.Username;
-                userInDb.Email = updatedUser.Email;
-
-                _context.SaveChanges();
-
-                // ✅ Update session username in case it changed
-                HttpContext.Session.SetString("Username", userInDb.Username);
+                userInDb.ProfilePicture = fileName;
             }
+
+            // 2. Update username & email
+            userInDb.Username = updatedUser.Username;
+            userInDb.Email = updatedUser.Email;
+
+            // 3. 🔥 IMPORTANT: update password ONLY if not empty
+            if (!string.IsNullOrWhiteSpace(updatedUser.Password))
+            {
+                userInDb.Password = updatedUser.Password;
+            }
+
+            _context.SaveChanges();
+
+            // 4. Update session values
+            HttpContext.Session.SetString("Username", userInDb.Username);
+            HttpContext.Session.SetString("Email", userInDb.Email);
 
             return RedirectToAction("Profile");
         }
