@@ -5,10 +5,10 @@
     --cat-green: #2D7D46;
 }
 
-.order-page-wrapper{
-    background-color:var(--cat-cream);
-    min-height:100vh;
-    margin-top:-24px;
+.order-page-wrapper {
+    background-color: var(--cat-cream);
+    min-height: 100vh;
+    margin-top: -24px;
 }
 
 /* Empty State Styling */
@@ -45,9 +45,9 @@
 /* Order Card Styling */
 .order-history-card {
     background-color: transparent;
-    border: 2px solid var(--cat-brown);
-    border-radius: 30px;
-    padding: 25px;
+    border: 3px solid var(--cat-brown); /* Thickened border for the new look */
+    border-radius: 35px; /* Smoother rounding */
+    padding: 30px;
     height: 100%;
     color: var(--cat-brown);
 }
@@ -68,15 +68,17 @@
     border-radius: 20px;
     padding: 5px 25px;
     font-size: 0.9rem;
+    font-weight: bold;
     color: white;
     display: inline-block;
 }
 
-.status-pending {
+/* Updated badge class names to support both your older code and the new layout */
+.status-pending, .badge-pending {
     background-color: var(--cat-brown);
 }
 
-.status-done {
+.status-done, .badge-done {
     background-color: var(--cat-green);
 }
 
@@ -110,4 +112,9 @@
     justify-content: space-between;
     align-items: center;
     font-size: 2rem;
+}
+
+/* Custom Brown Color Utility */
+.text-brown {
+    color: var(--cat-brown) !important;
 }

@@ -324,3 +324,44 @@
         background-color: var(--cat-brown);
         color: white;
     }
+
+/* --- Cart Modal Layout Matching --- */
+
+/* The hollow circle buttons for the Cart (+ and -) */
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid var(--cat-brown);
+    background: transparent;
+    color: var(--cat-brown);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 0;
+    line-height: 1;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+    .btn-circle:hover {
+        background: var(--cat-brown);
+        color: white;
+    }
+
+/* Individual Cart Items */
+.cart-item-card {
+    border: 1px solid #f0e0ce;
+}
+
+/* The red X remove button */
+.btn-remove-item {
+    color: #c0392b !important;
+    transition: transform 0.1s;
+}
+
+    .btn-remove-item:hover {
+        transform: scale(1.2);
+    }

@@ -1,35 +1,64 @@
-﻿
+﻿@model IEnumerable<Catpuccino_FinalProject.Models.UserOrder>
+
 @{
-    ViewData["Title"] = "Order";
+    ViewData["Title"] = "Order History";
 }
 <link rel="stylesheet" href="~/css/order.css" asp-append-version="true" />
 
-<div class="order-page-wrapper">
-    <header class="order-history-header text-center">
-        <div class="container">
-            <h1 class="history-title">Order History</h1>
-            <p class="history-subtitle">Track your orders, and check your past transactions</p>
+<div class="order-page-wrapper pt-4">
+    
+    <header class="order-history-header text-center mb-4">
+        <div class="container text-start">
+            <h1 class="history-title text-brown fw-bold" style="font-size: 3.5rem;">Order History</h1>
+            <p class="history-subtitle text-brown" style="font-size: 1.2rem;">Track your orders, and check your past transactions</p>
         </div>
     </header>
 
-    <main class="container py-1">
+    <main class="container py-1 mb-5">
         @if (Model != null && Model.Any())
         {
             <div class="row g-4 row-cols-1 row-cols-md-2">
                 @foreach (var order in Model)
                 {
                     <div class="col">
-                        <div class="order-history-card shadow-sm bg-white">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div>
-                                    <div class="order-date">@order.Date</div>
-                                    <div class="order-label">Order</div>
-                                </div>
-                                <div class="status-badge @(order.Status == "Pending" ? "status-pending" : "status-done")">
+                        <div class="order-history-card">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <small class="text-brown fw-bold fs-6">@order.Date</small>
+                                <span class="status-badge @(order.Status == "Pending" ? "badge-pending" : "badge-done")">
                                     @order.Status
-                                </div>
+                                </span>
                             </div>
 
+                            <h2 class="text-brown fw-bold mb-4">Order</h2>
+
+                            <div class="row text-brown fw-bold mb-2">
+                                <div class="col-6"></div>
+                                <div class="col-3 text-start"></div>
+                                <div class="col-3 text-center">Qty</div>
+                            </div>
+
+                            @foreach (var item in order.Items)
+                            {
+                                <div class="row text-brown mb-2 align-items-center">
+                                    <div class="col-6 fw-bold fs-5">
+                                        @item.Name (@item.Size.Substring(0, 1))
+                                    </div>
+                                    <div class="col-3 text-start fw-bold fs-5">                                    
+                                        P@(item.Price.ToString("0"))
+                                    </div>
+                                    <div class="col-3 text-center fw-bold fs-5">
+                                        @item.Qty
+                                    </div>
+                                </div>
+                            }
+
+                           
+                            <hr class="text-brown border-2 opacity-100 my-4">
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h2 class="text-brown fw-bold mb-0" style="font-size: 2.5rem;">Total:</h2>                            
+                                <h2 class="text-brown fw-bold mb-0" style="font-size: 2.5rem;">P@(order.TotalAmount.ToString("0"))</h2>
+                            </div>
                         </div>
                     </div>
                 }
@@ -37,8 +66,9 @@
         }
         else
         {
-            <div class="no-orders-container">
-                <img src="~/images/orderpics/noorderillus.png" alt="No Orders" class="no-orders-img" />
+            <div class="no-orders-container text-center mt-5">
+                <img src="~/images/orderpics/noorderillus.png" alt="No Orders" class="img-fluid" style="max-width: 400px;" />
+                <h4 class="text-muted mt-4">You haven't placed any orders yet!</h4>
             </div>
         }
     </main>

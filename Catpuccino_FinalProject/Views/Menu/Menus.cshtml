@@ -13,7 +13,7 @@
 
         <div class="position-relative">
             <button class="btn btn-order-main" data-bs-toggle="modal" data-bs-target="#orderModal">
-                Order <span class="notification-dot"></span>
+                Order <span class="notification-dot" style="display: none;"></span>
             </button>
         </div>
     </div>
@@ -40,7 +40,6 @@
             @foreach (var item in Model)
             {
                 <div class="col">
-                   
                     <div class="card menu-card h-100" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#modal-@item.Id">
                         <img src="@item.ImageUrl" class="card-img-top" alt="@item.Name" style="height: 220px; object-fit: cover;">
                         <div class="card-body d-flex flex-column">
@@ -51,24 +50,21 @@
                     </div>
                 </div>
 
-              
-                <div class="modal fade" id="modal-@item.Id" tabindex="-1" aria-hidden="true">
+                <div class="modal fade product-detail-modal" id="modal-@item.Id" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content modal-content-custom shadow-lg p-0">
                             
                             <img src="@item.ImageUrl" class="w-100" style="height: 250px; object-fit: cover; border-top-left-radius: 30px; border-top-right-radius: 30px;" />
                             
                             <div class="p-4">
-                                <h3 class="text-brown fw-bold mb-1">@item.Name</h3>
+                                <h3 class="text-brown fw-bold mb-1 product-name-display">@item.Name</h3>
                                 <p class="small text-muted mb-4">@item.Description</p>
 
-                              
-                                <form asp-action="AddToCart" asp-controller="Order" method="post">
+                                <form id="form-@item.Id">
                                     <input type="hidden" name="ProductId" value="@item.Id" />
                                     
                                     <h5 class="text-brown fw-bold mb-3">Size</h5>
                                     
-                                  
                                     <div class="d-flex gap-2 mb-4 size-selector-group">
                                         <input type="radio" id="small-@item.Id" name="Size" value="Small" class="d-none size-radio" data-addon="0" checked>
                                         <label for="small-@item.Id" class="btn-size-label text-center">
@@ -92,24 +88,21 @@
                                     <div class="d-flex justify-content-between align-items-end mb-4">
                                         <div>
                                             <h5 class="text-brown fw-bold mb-2">Quantity</h5>
-                                      
                                             <div class="d-flex align-items-center gap-3">
                                                 <button type="button" class="btn-qty minus-btn" data-target="@item.Id">-</button>
-                                                
                                                 <input type="hidden" name="Quantity" id="qty-input-@item.Id" value="1" />
                                                 <span id="qty-text-@item.Id" class="fs-4 fw-bold text-brown">1</span>
                                                 <button type="button" class="btn-qty plus-btn" data-target="@item.Id">+</button>
                                             </div>
                                         </div>
                                         <div>
-                                          
                                             <span class="fs-5 fw-bold text-brown">Total : P<span class="live-total" id="total-@item.Id" data-baseprice="@item.Price">@item.Price.ToString("0")</span></span>
                                         </div>
                                     </div>
 
                                     <div class="d-flex gap-3 mt-2">
                                         <button type="button" class="btn btn-cancel flex-grow-1" data-bs-dismiss="modal">Cancel</button>
-                                        <button type="submit" class="btn btn-add-to-order flex-grow-1">Add to Order</button>
+                                        <button type="button" class="btn btn-add-to-order flex-grow-1 add-to-cart-btn">Add to Order</button>
                                     </div>
                                 </form>
                             </div>
@@ -146,15 +139,15 @@
                 <div class="order-totals">
                     <div class="d-flex justify-content-between mb-2">
                         <span class="text-brown">Subtotal</span>
-                        <span class="text-brown">P0</span>
+                        <span class="text-brown" id="cart-subtotal">P0</span>
                     </div>
                     <div class="d-flex justify-content-between fw-bold fs-4">
                         <span>Total</span>
-                        <span>P0</span>
+                        <span id="cart-total">P0</span>
                     </div>
                 </div>
 
-                <button class="btn btn-place-order shadow-sm">Place Order</button>
+                <button class="btn btn-place-order shadow-sm w-100 mt-4">Place Order</button>
             </div>
 
         </div>
@@ -163,7 +156,8 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // Handle Quantity Plus/Minus
+        
+        // --- 1. PRODUCT MODAL LOGIC (Plus/Minus & Size Math) ---
         document.querySelectorAll('.btn-qty').forEach(btn => {
             btn.addEventListener('click', function() {
                 const targetId = this.getAttribute('data-target');
@@ -183,21 +177,18 @@
             });
         });
 
-        // Handle Size Selection changes
         document.querySelectorAll('.size-radio').forEach(radio => {
             radio.addEventListener('change', function() {
-                const targetId = this.id.split('-')[1]; // Extracts the item.Id
+                const targetId = this.id.split('-')[1];
                 updateTotal(targetId);
             });
         });
 
-        // Calculate the Live Total
         function updateTotal(itemId) {
             const qty = parseInt(document.getElementById('qty-input-' + itemId).value);
             const basePrice = parseFloat(document.getElementById('total-' + itemId).getAttribute('data-baseprice'));
             
             let addon = 0;
-            // Find which size radio is currently checked for this specific product
             const selectedRadio = document.querySelector(`input[name="Size"][id$="-${itemId}"]:checked`);
             if (selectedRadio) {
                 addon = parseFloat(selectedRadio.getAttribute('data-addon'));
@@ -205,6 +196,156 @@
 
             const total = (basePrice + addon) * qty;
             document.getElementById('total-' + itemId).textContent = total;
+        }
+
+
+        // --- 2. DYNAMIC CART LOGIC ---
+        let cart = [];
+
+        // Listen for "Add to Order" clicks
+        document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const form = this.closest('form');
+                const productId = form.querySelector('input[name="ProductId"]').value;
+                const name = this.closest('.p-4').querySelector('.product-name-display').innerText;
+                const qty = parseInt(form.querySelector('input[name="Quantity"]').value);
+                
+                const selectedRadio = form.querySelector('input[name="Size"]:checked');
+                const size = selectedRadio.value;
+                const sizeAddon = parseFloat(selectedRadio.getAttribute('data-addon'));
+                const basePrice = parseFloat(form.querySelector('.live-total').getAttribute('data-baseprice'));
+                const unitPrice = basePrice + sizeAddon;
+
+                // Check if already in cart (same product AND same size)
+                const existingIndex = cart.findIndex(item => item.id === productId && item.size === size);
+                if (existingIndex > -1) {
+                    cart[existingIndex].qty += qty;
+                } else {
+                    cart.push({ id: productId, name: name, size: size, price: unitPrice, qty: qty });
+                }
+
+                // Close the product modal
+                const modalEl = this.closest('.modal');
+                const bsModal = bootstrap.Modal.getInstance(modalEl);
+                bsModal.hide();
+
+                // Update the Cart Modal HTML
+                renderCart();
+            });
+        });
+
+        // Function to draw the cart HTML
+        function renderCart() {
+            const container = document.getElementById('cartItemsContainer');
+            const subtotalEl = document.getElementById('cart-subtotal');
+            const totalEl = document.getElementById('cart-total');
+            const notifDot = document.querySelector('.notification-dot');
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="text-center text-muted py-5 italic">Your cart is currently empty.</p>';
+                subtotalEl.innerText = 'P0';
+                totalEl.innerText = 'P0';
+                if (notifDot) notifDot.style.display = 'none';
+                return;
+            }
+
+            if (notifDot) notifDot.style.display = 'block';
+            let html = '';
+            let grandTotal = 0;
+
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.qty;
+                grandTotal += itemTotal;
+
+                html += `
+                        <div class="cart-item-card bg-white p-3 rounded-4 mb-3 shadow-sm">
+                            <div class="d-flex justify-content-between align-items-start mb-1">
+                                <div>
+                                    <h5 class="mb-0 fw-bold text-brown">${item.name}</h5>
+                                    <small class="text-muted d-block mt-1">${item.size}</small>
+                                </div>
+                                <span class="fw-bold text-brown fs-5">P${itemTotal}</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div class="d-flex align-items-center gap-3">
+                                    <button type="button" class="btn-circle cart-minus" data-index="${index}">-</button>
+                                    <span class="fw-bold text-brown fs-5">${item.qty}</span>
+                                    <button type="button" class="btn-circle cart-plus" data-index="${index}">+</button>
+                                </div>
+                                <button type="button" class="btn-remove-item text-danger fw-bold fs-3 border-0 bg-transparent" data-index="${index}">×</button>
+                            </div>
+                        </div>
+                    `;
+            });
+
+            container.innerHTML = html;
+            subtotalEl.innerText = 'P' + grandTotal;
+            totalEl.innerText = 'P' + grandTotal;
+        }
+
+        // Listen for clicks inside the Cart Modal (+, -, Remove)
+        document.getElementById('cartItemsContainer').addEventListener('click', function(e) {
+            if (e.target.classList.contains('cart-minus')) {
+                const index = e.target.getAttribute('data-index');
+                if (cart[index].qty > 1) {
+                    cart[index].qty--;
+                } else {
+                    cart.splice(index, 1);
+                }
+                renderCart();
+            } else if (e.target.classList.contains('cart-plus')) {
+                const index = e.target.getAttribute('data-index');
+                cart[index].qty++;
+                renderCart();
+            } else if (e.target.classList.contains('btn-remove-item')) {
+                const index = e.target.getAttribute('data-index');
+                cart.splice(index, 1);
+                renderCart();
+            }
+        });
+
+        // --- 3. SUBMIT ORDER LOGIC ---
+        const placeOrderBtn = document.querySelector('.btn-place-order');
+        if (placeOrderBtn) {
+            placeOrderBtn.addEventListener('click', function() {
+                if (cart.length === 0) {
+                    alert("Your cart is empty!");
+                    return;
+                }
+
+                // Change button text to show loading
+                this.innerText = "Processing...";
+                this.disabled = true;
+
+                // Send cart data to the C# Controller using Razor to safely generate the URL
+                fetch('@Url.Action("PlaceOrder", "Order")', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(cart)
+                })
+                    .then(response => {
+                        if (!response.ok) throw new Error("Network response was not ok");
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            // Redirect to the Order History page
+                            window.location.href = data.redirectUrl;
+                        } else {
+                            alert("Failed to place order.");
+                            this.innerText = "Place Order";
+                            this.disabled = false;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert("An error occurred while communicating with the server.");
+                        this.innerText = "Place Order";
+                        this.disabled = false;
+                    });
+            });
         }
     });
 </script>
