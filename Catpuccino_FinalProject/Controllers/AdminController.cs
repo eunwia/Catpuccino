@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Catpuccino_FinalProject.Data; // Ensure this matches your Data folder
+using Catpuccino_FinalProject.Data;
 using Catpuccino_FinalProject.Models;
 
 namespace Catpuccino_FinalProject.Controllers
@@ -8,7 +8,7 @@ namespace Catpuccino_FinalProject.Controllers
     public class AdminController : Controller
     {
         private readonly IWebHostEnvironment _env;
-        private readonly AppDbContext _context; // Added this back
+        private readonly AppDbContext _context;
 
         public AdminController(IWebHostEnvironment env, AppDbContext context)
         {
@@ -51,12 +51,26 @@ namespace Catpuccino_FinalProject.Controllers
             if (HttpContext.Session.GetString("IsAdmin") != "true")
                 return RedirectToAction("Login");
 
-            // Pulling real counts from the database
-            ViewBag.TotalOrders = 5; // Replace with _context.Orders.Count() when table is ready
-            ViewBag.PendingOrders = 5;
-            ViewBag.CompletedOrders = 5;
+            var today = DateTime.Today;
+
+            // ✅ Pull real order stats from database
+            var todaysOrders = _context.Orders
+                .Where(o => o.Date.Date == today)
+                .Include(o => o.Items)
+                .ToList();
+
+            ViewBag.TotalOrders = todaysOrders.Count;
+            ViewBag.PendingOrders = todaysOrders.Count(o => o.Status == "Pending");
+            ViewBag.CompletedOrders = todaysOrders.Count(o => o.Status == "Done");
             ViewBag.ProductCount = _context.Products.Count();
-            ViewBag.RecentOrders = GetSampleOrders();
+
+            // ✅ Recent orders for the table (last 10)
+            ViewBag.RecentOrders = _context.Orders
+                .Include(o => o.Items)
+                .OrderByDescending(o => o.Id)
+                .Take(10)
+                .ToList();
+
             return View();
         }
 
@@ -66,14 +80,34 @@ namespace Catpuccino_FinalProject.Controllers
             if (HttpContext.Session.GetString("IsAdmin") != "true")
                 return RedirectToAction("Login");
 
+            // ✅ Pull real orders from database with filter
+            var query = _context.Orders.Include(o => o.Items).AsQueryable();
+
+            if (filter == "Pending")
+                query = query.Where(o => o.Status == "Pending");
+            else if (filter == "Done")
+                query = query.Where(o => o.Status == "Done");
+
             ViewBag.Filter = filter;
-            ViewBag.Orders = GetSampleOrders();
+            ViewBag.Orders = query.OrderByDescending(o => o.Id).ToList();
+
             return View();
         }
 
+        // ✅ Save updated statuses to database
         [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult SaveOrderStatuses(string[] orderIds, string[] statuses)
+        public IActionResult SaveOrderStatuses(int[] orderIds, string[] statuses)
         {
+            for (int i = 0; i < orderIds.Length; i++)
+            {
+                var order = _context.Orders.Find(orderIds[i]);
+                if (order != null)
+                {
+                    order.Status = statuses[i];
+                }
+            }
+            _context.SaveChanges();
+
             TempData["Success"] = "Statuses updated.";
             return RedirectToAction("Orders");
         }
@@ -86,7 +120,6 @@ namespace Catpuccino_FinalProject.Controllers
 
             var vm = new ProductsPageViewModel
             {
-                // Pulling real products from CatpuccinoDb
                 Products = _context.Products.Select(p => new AdminProductModel
                 {
                     Id = p.Id,
@@ -127,7 +160,6 @@ namespace Catpuccino_FinalProject.Controllers
                 imagePath = "/uploads/products/" + fileName;
             }
 
-            // Saving to Product Table
             var newProduct = new Product
             {
                 Name = model.Name,
@@ -155,7 +187,5 @@ namespace Catpuccino_FinalProject.Controllers
             }
             return RedirectToAction("Products");
         }
-
-        private List<dynamic> GetSampleOrders() => new();
     }
 }

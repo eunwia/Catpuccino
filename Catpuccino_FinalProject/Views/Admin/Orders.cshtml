@@ -32,11 +32,11 @@
             <tbody>
                 @{
                     int i = 0;
-                    foreach (var order in ViewBag.Orders as IEnumerable<dynamic> ?? new List<dynamic>())
+                    foreach (var order in ViewBag.Orders as IEnumerable<Catpuccino_FinalProject.Models.Order> ?? new List<Catpuccino_FinalProject.Models.Order>())
                     {
                         <tr>
                             <td>
-                                <strong>@order.OrderNumber</strong>
+                                <strong>#@order.Id</strong>
                                 <input type="hidden" name="orderIds[@i]" value="@order.Id" />
                             </td>
                             <td>
@@ -52,7 +52,7 @@
                                 }
                             </td>
                             <td>@order.Date.ToString("MM/dd/yy")</td>
-                            <td>P@order.Total</td>
+                            <td>P@(order.TotalAmount.ToString("0"))</td>
                             <td>
                                 <button type="button"
                                         class="status-toggle pending @(order.Status == "Pending" ? "" : "d-none")"

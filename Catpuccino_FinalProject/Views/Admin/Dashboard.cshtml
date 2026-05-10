@@ -51,10 +51,10 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var order in ViewBag.RecentOrders as IEnumerable<dynamic> ?? new List<dynamic>())
+            @foreach (var order in ViewBag.RecentOrders as IEnumerable<Catpuccino_FinalProject.Models.Order> ?? new List<Catpuccino_FinalProject.Models.Order>())
             {
                 <tr>
-                    <td><strong>@order.OrderNumber</strong></td>
+                    <td><strong>#@order.Id</strong></td>
                     <td>
                         @foreach (var item in order.Items)
                         {
@@ -68,7 +68,7 @@
                         }
                     </td>
                     <td>@order.Date.ToString("MM/dd/yy")</td>
-                    <td>P@order.Total</td>
+                    <td>P@(order.TotalAmount.ToString("0"))</td>
                     <td>
                         <span class="@(order.Status == "Done" ? "badge-done" : "badge-pending")">
                             @order.Status

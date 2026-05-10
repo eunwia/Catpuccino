@@ -1,51 +1,83 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Catpuccino_FinalProject.Data;
 using Catpuccino_FinalProject.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Catpuccino_FinalProject.Controllers
 {
     public class OrderController : Controller
     {
-        // Temporary mock database to store orders while app is running
-        private static List<UserOrder> _mockOrders = new List<UserOrder>();
+        private readonly AppDbContext _context;
+
+        public OrderController(AppDbContext context)
+        {
+            _context = context;
+        }
 
         public IActionResult Index()
         {
             return View();
         }
 
-        // View for the Order History page
         public IActionResult Order()
         {
-            // Pass the mock database to the view, ordering by newest first
-            return View(_mockOrders.OrderByDescending(o => o.Id).ToList());
+            var userId = HttpContext.Session.GetInt32("UserId");
+
+            if (userId == null)
+                return RedirectToAction("Login", "User");
+
+            // ✅ Pull from DB, then map Order → UserOrder (your existing view model)
+            var orders = _context.Orders
+                .Where(o => o.UserId == userId)
+                .Include(o => o.Items)
+                .OrderByDescending(o => o.Id)
+                .Select(o => new UserOrder
+                {
+                    Id = o.Id,
+                    Date = o.Date.ToString("MM/dd/yyyy"),  // DateTime → string to match UserOrder
+                    Status = o.Status,
+                    TotalAmount = o.TotalAmount,
+                    Items = o.Items.Select(i => new CartItemDto  // OrderItem → CartItemDto
+                    {
+                        Name = i.Name,
+                        Size = i.Size,
+                        Price = i.Price,
+                        Qty = i.Qty
+                    }).ToList()
+                })
+                .ToList();
+
+            return View(orders);
         }
 
-        // This receives the cart from JS when "Place Order" is clicked
         [HttpPost]
         public IActionResult PlaceOrder([FromBody] List<CartItemDto> cartItems)
         {
             if (cartItems == null || !cartItems.Any())
-            {
                 return BadRequest("Cart is empty");
-            }
 
-            // Create a new order record
-            var newOrder = new UserOrder
+            var userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+
+            // ✅ Map CartItemDto → OrderItem when saving to DB
+            var newOrder = new Order
             {
-                Id = _mockOrders.Count + 1,
-                Date = DateTime.Now.ToString("MM/dd/yyyy"),
-                Status = "Pending", // Default status
+                Date = DateTime.Now,
+                Status = "Pending",
                 TotalAmount = cartItems.Sum(item => item.Price * item.Qty),
-                Items = cartItems
+                UserId = userId,
+                Items = cartItems.Select(i => new OrderItem
+                {
+                    Name = i.Name,
+                    Size = i.Size,
+                    Price = i.Price,
+                    Qty = i.Qty
+                }).ToList()
             };
 
-            // Save to mock database
-            _mockOrders.Add(newOrder);
+            _context.Orders.Add(newOrder);
+            _context.SaveChanges();
 
-            // Tell JS it was successful and where to redirect
             return Json(new { success = true, redirectUrl = Url.Action("Order", "Order") });
         }
     }
