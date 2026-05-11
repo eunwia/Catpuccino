@@ -18,17 +18,29 @@ namespace Catpuccino_FinalProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Register(User user)
+        // 1. Ensure this matches your model name exactly: UserRegisterModel
+        public IActionResult Register(UserRegisterModel model)
         {
             if (ModelState.IsValid)
             {
-                _context.Users.Add(user);
+                // 2. Create a NEW User object (the entity that matches your DB)
+                var newUser = new User
+                {
+                    Username = model.Username,
+                    Email = model.Email,
+                    Password = model.Password // Values from the form go here
+                };
+
+                // 3. Add the ENTITY to the database, not the RegisterModel
+                _context.Users.Add(newUser);
                 _context.SaveChanges();
+
                 return RedirectToAction("Login");
             }
-            return View(user);
-        }
 
+            // 4. If validation (like ConfirmPassword) fails, return the model back to the view
+            return View(model);
+        }
         public IActionResult Login() => View();
 
         [HttpPost]

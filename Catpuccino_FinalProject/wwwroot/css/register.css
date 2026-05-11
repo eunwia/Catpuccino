@@ -117,15 +117,34 @@ body {
         transform: translateY(0);
     }
 
+/* 1. The Summary Box (The one at the top) */
 .validation-summary {
     background: rgba(122, 46, 14, 0.1);
     border-radius: 12px;
-    padding: 0.6rem 1rem;
-    margin-bottom: 1rem;
+    padding: 0.8rem 1rem;
+    margin-bottom: 1.5rem;
     color: #7a2e0e;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
+    width: 100%;
+    text-align: center; /* Centers the text */
 }
 
+    /* Removes bullets from the summary list */
+    .validation-summary ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+/* 2. Individual Field Errors (The ones under the inputs) */
+.text-danger {
+    display: block; /* Allows centering */
+    text-align: center; /* Centers the message under the input */
+    font-size: 0.85rem;
+    margin-top: 0.4rem;
+    padding-left: 0; /* Remove the padding since we're centering */
+    color: #7a2e0e !important;
+}
 .back-btn {
     position: fixed;
     top: 5vh;
