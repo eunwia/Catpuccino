@@ -365,3 +365,22 @@
     .btn-remove-item:hover {
         transform: scale(1.2);
     }
+.filter-btn {
+    border: 1px solid var(--cat-light-brown);
+    background-color: transparent;
+    color: var(--cat-brown);
+    border-radius: 20px;
+    padding: 8px 25px;
+    margin: 5px;
+    cursor: pointer; /* Ensure it looks clickable */
+    transition: all 0.2s ease-in-out;
+    outline: none !important;
+}
+
+    /* Highlighting the active button and hover state */
+    .filter-btn.active,
+    .filter-btn:hover {
+        background-color: var(--cat-brown) !important;
+        color: white !important;
+        border-color: var(--cat-brown);
+    }
