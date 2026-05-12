@@ -56,16 +56,19 @@
 
 .info-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start; /* Changed from space-between to flex-start */
     align-items: center;
     margin-bottom: 1.8rem;
     width: 100%;
+    gap: 20px; /* Added a gap to control the exact distance between label and field */
 }
 
+/* Add this to ensure the labels have a consistent width so fields stay aligned */
 .info-label {
     color: #80512F;
     font-size: 1.8rem;
     flex-shrink: 0;
+    width: 120px; /* Adjust this number to make the space smaller or larger */
 }
 
 .info-value {

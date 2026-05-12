@@ -14,18 +14,20 @@
 
         <div class="card-base card-left">
             <div id="image-container">
-                <img src="~/images/userpics/@(string.IsNullOrEmpty(Model.ProfilePicture) ? "UserDefault.png" : Model.ProfilePicture)"
+                @* Added id="profilePreview" to the img tag *@
+                <img id="profilePreview" src="~/images/userpics/@(string.IsNullOrEmpty(Model.ProfilePicture) ? "UserDefault.png" : Model.ProfilePicture)"
                      class="profile-pic" alt="Profile Picture" />
             </div>
 
             <div id="logout-section">
-                <a asp-controller="User" asp-action="Logout" class="btn-primary-action">
+                <a asp-controller="Home" asp-action="Onboarding" class="btn-primary-action">
                     Logout <i class="fa-solid fa-arrow-right-from-bracket"></i>
                 </a>
             </div>
 
             <div id="upload-section" style="display:none;">
-                <input type="file" id="imageUpload" name="imageFile" style="display:none;" accept="image/*" />
+                @* Added onchange event to the file input *@
+                <input type="file" id="imageUpload" name="imageFile" style="display:none;" accept="image/*" onchange="previewImage(this)" />
                 <button type="button" class="btn-primary-action btn-upload-style" onclick="document.getElementById('imageUpload').click();">
                     Upload Picture
                 </button>
@@ -70,7 +72,7 @@
                     <input name="Password" type="password" class="edit-input" placeholder="********" />
                 </div>
 
-                <br></><div class="button-wrapper">
+                <br /><div class="button-wrapper">
                     <button type="submit" class="btn-primary-action">Save Changes</button>
                     <br />
                     <a href="javascript:void(0)" onclick="toggleEdit()" class="cancel-link">Cancel</a>
@@ -97,6 +99,19 @@
             editDiv.style.display = "block";
             logoutSec.style.display = "none";
             uploadSec.style.display = "block";
+        }
+    }
+
+    // New function to preview the image
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                document.getElementById('profilePreview').setAttribute('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
         }
     }
 </script>
