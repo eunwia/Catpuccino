@@ -53,7 +53,6 @@ namespace Catpuccino_FinalProject.Controllers
 
             var today = DateTime.Today;
 
-            // ✅ Pull real order stats from database
             var todaysOrders = _context.Orders
                 .Where(o => o.Date.Date == today)
                 .Include(o => o.Items)
@@ -64,7 +63,6 @@ namespace Catpuccino_FinalProject.Controllers
             ViewBag.CompletedOrders = todaysOrders.Count(o => o.Status == "Done");
             ViewBag.ProductCount = _context.Products.Count();
 
-            // ✅ Recent orders for the table (last 10)
             ViewBag.RecentOrders = _context.Orders
                 .Include(o => o.Items)
                 .OrderByDescending(o => o.Id)
@@ -80,7 +78,6 @@ namespace Catpuccino_FinalProject.Controllers
             if (HttpContext.Session.GetString("IsAdmin") != "true")
                 return RedirectToAction("Login");
 
-            // ✅ Pull real orders from database with filter
             var query = _context.Orders.Include(o => o.Items).AsQueryable();
 
             if (filter == "Pending")
@@ -94,7 +91,6 @@ namespace Catpuccino_FinalProject.Controllers
             return View();
         }
 
-        // ✅ Save updated statuses to database
         [HttpPost, ValidateAntiForgeryToken]
         public IActionResult SaveOrderStatuses(int[] orderIds, string[] statuses)
         {
@@ -150,14 +146,7 @@ namespace Catpuccino_FinalProject.Controllers
 
             if (model.Photo != null && model.Photo.Length > 0)
             {
-                var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads", "products");
-                Directory.CreateDirectory(uploadsFolder);
-                var fileName = Guid.NewGuid() + Path.GetExtension(model.Photo.FileName);
-                var filePath = Path.Combine(uploadsFolder, fileName);
-
-                using var stream = new FileStream(filePath, FileMode.Create);
-                await model.Photo.CopyToAsync(stream);
-                imagePath = "/uploads/products/" + fileName;
+                imagePath = await SaveImage(model.Photo);
             }
 
             var newProduct = new Product
@@ -176,6 +165,30 @@ namespace Catpuccino_FinalProject.Controllers
             return RedirectToAction("Products");
         }
 
+        // ── NEW: EDIT PRODUCT LOGIC ──
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditProduct(int Id, string Name, decimal Price, string Category, string Description, IFormFile Photo)
+        {
+            var product = await _context.Products.FindAsync(Id);
+            if (product == null) return NotFound();
+
+            product.Name = Name;
+            product.Price = Price;
+            product.Category = Category;
+            product.Description = Description;
+
+            if (Photo != null && Photo.Length > 0)
+            {
+                product.ImageUrl = await SaveImage(Photo);
+            }
+
+            _context.Products.Update(product);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Product updated successfully.";
+            return RedirectToAction("Products");
+        }
+
         [HttpPost]
         public async Task<IActionResult> DeleteProduct(int id)
         {
@@ -186,6 +199,19 @@ namespace Catpuccino_FinalProject.Controllers
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction("Products");
+        }
+
+        // Helper method to handle image saving
+        private async Task<string> SaveImage(IFormFile photo)
+        {
+            var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads", "products");
+            Directory.CreateDirectory(uploadsFolder);
+            var fileName = Guid.NewGuid() + Path.GetExtension(photo.FileName);
+            var filePath = Path.Combine(uploadsFolder, fileName);
+
+            using var stream = new FileStream(filePath, FileMode.Create);
+            await photo.CopyToAsync(stream);
+            return "/uploads/products/" + fileName;
         }
     }
 }

@@ -87,6 +87,7 @@
             text-decoration: none;
             border-radius: 0;
             transition: background 0.15s, color 0.15s;
+            cursor: pointer;
         }
 
             .nav-link-item:hover {
@@ -151,11 +152,73 @@
         .page-body {
             padding: 2rem 2.5rem;
         }
+
+        /* ── CUSTOM MODAL OVERLAY ── */
+        .logout-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .logout-modal-card {
+            background-color: #FFE6CC;
+            border-radius: 45px;
+            padding: 50px;
+            text-align: center;
+            max-width: 480px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: modalPop 0.3s ease;
+        }
+
+        .logout-modal-card i {
+            font-size: 4rem;
+            color: #A0524C;
+            margin-bottom: 1.5rem;
+        }
+
+        .logout-modal-card p {
+            font-size: 2.2rem;
+            color: #80512F;
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+
+        .btn-modal-custom {
+            border-radius: 50px;
+            padding: 12px 0;
+            width: 140px;
+            font-size: 1.5rem;
+            border: none;
+            color: white;
+            transition: opacity 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-modal-yes {
+            background-color: #A0524C;
+        }
+
+        .btn-modal-no {
+            background-color: #2F8039;
+        }
+
+        .btn-modal-custom:hover {
+            opacity: 0.8;
+            color: white;
+        }
     </style>
 </head>
 <body>
 
-    <!-- SIDEBAR -->
     <aside class="sidebar">
         <div class="sidebar-brand">
             <img src="~/images/adminpics/cat-logo-dashboard.png" alt="Cattpuccino Logo" />
@@ -183,8 +246,7 @@
             </a>
 
             <div class="nav-section-label">Account</div>
-            <a asp-controller="Admin" asp-action="Logout"
-               class="nav-link-item">
+            <a href="javascript:void(0);" class="nav-link-item" onclick="openLogoutModal()">
                 Log out
             </a>
         </nav>
@@ -198,7 +260,6 @@
         </div>
     </aside>
 
-    <!-- MAIN -->
     <div class="main-content">
         <div class="page-header">
             <h1>@ViewData["Title"]</h1>
@@ -208,8 +269,37 @@
         </div>
     </div>
 
+    <div class="logout-modal-overlay" id="logoutModalOverlay">
+        <div class="logout-modal-card">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <p>Are you sure you want to log out?</p>
+            <div class="d-flex gap-3 justify-content-center">
+                <a asp-controller="Home" asp-action="Onboarding" class="btn-modal-custom btn-modal-yes">YES</a>
+                <button type="button" class="btn-modal-custom btn-modal-no" onclick="closeLogoutModal()">NO</button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function openLogoutModal() {
+            document.getElementById('logoutModalOverlay').style.display = 'flex';
+        }
+
+        function closeLogoutModal() {
+            document.getElementById('logoutModalOverlay').style.display = 'none';
+        }
+
+        // Close modal when clicking on the overlay background
+        window.onclick = function(event) {
+            const overlay = document.getElementById('logoutModalOverlay');
+            if (event.target == overlay) {
+                closeLogoutModal();
+            }
+        }
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-

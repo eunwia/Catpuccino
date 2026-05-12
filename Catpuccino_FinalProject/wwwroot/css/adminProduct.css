@@ -76,13 +76,44 @@
     align-items: center;
     justify-content: space-between;
     border-top: 1px solid #F5ECD7;
-    pt-3;
+    padding-top: 1rem; /* Fixed: added padding-top */
 }
 
 .product-price {
     font-size: 1.2rem;
     color: #80512F;
     font-weight: bold;
+}
+
+/* ── Action Buttons ── */
+.btn-edit-small {
+    background: #F5ECD7;
+    color: #80512F;
+    border: none;
+    border-radius: 10px;
+    padding: 0.5rem;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background 0.2s;
+}
+
+    .btn-edit-small:hover {
+        background: #e9dcb9;
+    }
+
+.btn-delete {
+    background: #F5ECD7;
+    color: #80512F;
+    border: none;
+    border-radius: 10px;
+    padding: 0.5rem;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.d-flex.gap-2 {
+    display: flex;
+    gap: 8px;
 }
 
 /* ── Modals ── */
@@ -108,14 +139,13 @@
     width: 100%;
     max-width: 550px;
     max-height: 90vh;
-    overflow-y: auto; /* Keep scrolling functional */
-    /* This part hides the scrollbar */
-    scrollbar-width: none; /* For Firefox */
-    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
     .add-modal::-webkit-scrollbar {
-        display: none; /* For Chrome, Safari, and newer Edge */
+        display: none;
     }
 
 .modal-title {
@@ -168,7 +198,6 @@
     background: #FFFAF3;
 }
 
-/* ── Action Buttons ── */
 .btn-save-product {
     background: #80512F;
     color: white;
@@ -187,14 +216,4 @@
     padding: 0.8rem 1.5rem;
     flex: 1;
     cursor: pointer;
-}
-
-.btn-delete {
-    background: #F5ECD7;
-    color: #80512F;
-    border: none;
-    border-radius: 10px;
-    padding: 0.5rem;
-    cursor: pointer;
-    font-size: 1.1rem;
 }

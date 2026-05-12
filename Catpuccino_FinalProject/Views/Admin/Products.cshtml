@@ -15,7 +15,7 @@
         <h2 class="modal-title">Create New Listing</h2>
         <form asp-action="AddProduct" asp-controller="Admin" method="post" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
-            
+
             <div class="modal-row">
                 <div class="modal-field">
                     <label class="field-label">PRODUCT NAME</label>
@@ -62,6 +62,56 @@
     </div>
 </div>
 
+<div class="add-modal-overlay" id="editProductModal">
+    <div class="add-modal">
+        <h2 class="modal-title">Edit Product Details</h2>
+        <form asp-action="EditProduct" asp-controller="Admin" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <input type="hidden" id="editId" name="Id" />
+
+            <div class="modal-row">
+                <div class="modal-field">
+                    <label class="field-label">PRODUCT NAME</label>
+                    <input id="editName" name="Name" class="field-input" required />
+                </div>
+                <div class="modal-field" style="flex: 0 0 140px;">
+                    <label class="field-label">PRICE (₱)</label>
+                    <input id="editPrice" name="Price" class="field-input" type="number" step="0.01" required />
+                </div>
+            </div>
+
+            <div class="modal-field">
+                <label class="field-label">CATEGORY</label>
+                <select id="editCategory" name="Category" class="field-input" required>
+                    <option value="COFFEE">Coffee</option>
+                    <option value="TEA">Tea</option>
+                    <option value="PASTRIES">Pastries</option>
+                    <option value="CAKES">Cakes</option>
+                </select>
+            </div>
+
+            <div class="modal-field">
+                <label class="field-label">DESCRIPTION</label>
+                <textarea id="editDescription" name="Description" class="field-textarea" rows="3"></textarea>
+            </div>
+
+            <div class="modal-field">
+                <label class="field-label">PRODUCT PHOTO (Leave blank to keep current)</label>
+                <label class="photo-upload-area">
+                    <input name="Photo" type="file" style="display:none" onchange="previewEditPhoto(this)" />
+                    <span id="editPhotoText"><i class="fa-solid fa-cloud-arrow-up"></i> Upload New Image</span>
+                    <img id="editPhotoPreview" src="" style="display:none; max-height:100px; border-radius:8px; margin-top:5px;" />
+                </label>
+            </div>
+
+            <div class="d-flex gap-3 mt-3">
+                <button type="button" class="btn-cancel" onclick="closeEditModal()">CANCEL</button>
+                <button type="submit" class="btn-save-product" style="background:#80512F">SAVE PRODUCT</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <div class="row g-4 mt-2">
     @if (Model.Products != null && Model.Products.Any())
     {
@@ -76,9 +126,14 @@
                         <p class="product-desc">@p.Description</p>
                         <div class="product-footer pt-3">
                             <span class="product-price">₱ @p.Price.ToString("F2")</span>
-                            <button class="btn-delete" onclick="confirmDelete('@p.Id')">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
+                            <div class="d-flex gap-2">
+                                <button class="btn-edit-small" onclick="openEditModal('@p.Id', '@p.Name', '@p.Price', '@p.Category', '@p.Description')">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </button>
+                                <button class="btn-delete" onclick="confirmDelete('@p.Id')">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -105,7 +160,17 @@
     <script>
         function openAddModal() { document.getElementById('addProductModal').classList.add('show'); }
         function closeAddModal() { document.getElementById('addProductModal').classList.remove('show'); }
-        
+
+        function openEditModal(id, name, price, category, desc) {
+            document.getElementById('editId').value = id;
+            document.getElementById('editName').value = name;
+            document.getElementById('editPrice').value = price;
+            document.getElementById('editCategory').value = category;
+            document.getElementById('editDescription').value = desc;
+            document.getElementById('editProductModal').classList.add('show');
+        }
+        function closeEditModal() { document.getElementById('editProductModal').classList.remove('show'); }
+
         function confirmDelete(id) {
             document.getElementById('deleteForm').action = '/Admin/DeleteProduct/' + id;
             document.getElementById('deleteModal').classList.add('show');
@@ -126,9 +191,25 @@
             }
         }
 
-        // Close modal on outside click
+        function previewEditPhoto(input) {
+            const preview = document.getElementById('editPhotoPreview');
+            const text = document.getElementById('editPhotoText');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    text.style.display = 'none';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
         window.onclick = function(event) {
-            if (event.target.classList.contains('add-modal-overlay')) closeAddModal();
+            if (event.target.classList.contains('add-modal-overlay')) {
+                closeAddModal();
+                closeEditModal();
+            }
             if (event.target.classList.contains('delete-modal-overlay')) closeDeleteModal();
         }
     </script>
