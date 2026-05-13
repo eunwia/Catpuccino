@@ -131,11 +131,10 @@ namespace Catpuccino_FinalProject.Controllers
             return View(vm);
         }
 
+        // ── ADD PRODUCT ──
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddProduct(ProductsPageViewModel vm)
+        public async Task<IActionResult> AddProduct([Bind(Prefix = "NewProduct")] ProductViewModel model)
         {
-            var model = vm.NewProduct;
-
             if (!ModelState.IsValid)
             {
                 TempData["ShowAddModal"] = "true";
@@ -165,9 +164,9 @@ namespace Catpuccino_FinalProject.Controllers
             return RedirectToAction("Products");
         }
 
-        // ── NEW: EDIT PRODUCT LOGIC ──
+        // ── EDIT PRODUCT ──
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditProduct(int Id, string Name, decimal Price, string Category, string Description, IFormFile Photo)
+        public async Task<IActionResult> EditProduct(int Id, string Name, decimal Price, string Category, string Description, IFormFile? Photo)
         {
             var product = await _context.Products.FindAsync(Id);
             if (product == null) return NotFound();
@@ -189,6 +188,7 @@ namespace Catpuccino_FinalProject.Controllers
             return RedirectToAction("Products");
         }
 
+        // ── DELETE PRODUCT ──
         [HttpPost]
         public async Task<IActionResult> DeleteProduct(int id)
         {
@@ -201,7 +201,7 @@ namespace Catpuccino_FinalProject.Controllers
             return RedirectToAction("Products");
         }
 
-        // Helper method to handle image saving
+        // ── HELPER ──
         private async Task<string> SaveImage(IFormFile photo)
         {
             var uploadsFolder = Path.Combine(_env.WebRootPath, "uploads", "products");

@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 
-
 namespace Catpuccino_FinalProject.Models
 {
     public class ProductViewModel
@@ -16,9 +15,8 @@ namespace Catpuccino_FinalProject.Models
         [Required(ErrorMessage = "Category is required")]
         public string Category { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
-        public IFormFile Photo { get; set; }
-
+        public IFormFile? Photo { get; set; }  // ← nullable, fixes the save issue
     }
 }

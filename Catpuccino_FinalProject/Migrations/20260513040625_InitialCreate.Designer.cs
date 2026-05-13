@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Catpuccino_FinalProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260512010252_InitialCreate")]
+    [Migration("20260513040625_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
