@@ -14,19 +14,18 @@
 
         <div class="card-base card-left">
             <div id="image-container">
-                @* Added id="profilePreview" to the img tag *@
                 <img id="profilePreview" src="~/images/userpics/@(string.IsNullOrEmpty(Model.ProfilePicture) ? "UserDefault.png" : Model.ProfilePicture)"
                      class="profile-pic" alt="Profile Picture" />
             </div>
 
+            <!-- MODIFIED LOGOUT BUTTON -->
             <div id="logout-section">
-                <a asp-controller="Home" asp-action="Onboarding" class="btn-primary-action">
+                <button type="button" class="btn-primary-action" onclick="openLogoutModal()">
                     Logout <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                </a>
+                </button>
             </div>
 
             <div id="upload-section" style="display:none;">
-                @* Added onchange event to the file input *@
                 <input type="file" id="imageUpload" name="imageFile" style="display:none;" accept="image/*" onchange="previewImage(this)" />
                 <button type="button" class="btn-primary-action btn-upload-style" onclick="document.getElementById('imageUpload').click();">
                     Upload Picture
@@ -82,7 +81,34 @@
     </form>
 </div>
 
+<!-- LOGOUT MODAL HTML -->
+<div class="logout-modal-overlay" id="logoutModalOverlay">
+    <div class="logout-modal-card">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <p>Are you sure you want to log out?</p>
+        <div class="d-flex gap-3 justify-content-center">
+            <a asp-controller="Home" asp-action="Onboarding" class="btn-modal-custom btn-modal-yes">YES</a>
+            <button type="button" class="btn-modal-custom btn-modal-no" onclick="closeLogoutModal()">NO</button>
+        </div>
+    </div>
+</div>
+
 <script>
+    function openLogoutModal() {
+        document.getElementById('logoutModalOverlay').style.display = 'flex';
+    }
+
+    function closeLogoutModal() {
+        document.getElementById('logoutModalOverlay').style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+        const overlay = document.getElementById('logoutModalOverlay');
+        if (event.target == overlay) {
+            closeLogoutModal();
+        }
+    }
+
     function toggleEdit() {
         var displayDiv = document.querySelector('.display-mode');
         var editDiv = document.querySelector('.edit-mode');
@@ -102,15 +128,12 @@
         }
     }
 
-    // New function to preview the image
     function previewImage(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-
             reader.onload = function(e) {
                 document.getElementById('profilePreview').setAttribute('src', e.target.result);
             }
-
             reader.readAsDataURL(input.files[0]);
         }
     }
