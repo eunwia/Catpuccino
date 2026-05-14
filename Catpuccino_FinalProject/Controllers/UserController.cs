@@ -18,12 +18,11 @@ namespace Catpuccino_FinalProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        // 1. Ensure this matches your model name exactly: UserRegisterModel
         public IActionResult Register(UserRegisterModel model)
         {
             if (ModelState.IsValid)
             {
-                // 2. Create a NEW User object (the entity that matches your DB)
+                // 2. Create a NEW User object 
                 var newUser = new User
                 {
                     Username = model.Username,
@@ -31,7 +30,7 @@ namespace Catpuccino_FinalProject.Controllers
                     Password = model.Password // Values from the form go here
                 };
 
-                // 3. Add the ENTITY to the database, not the RegisterModel
+                // 3. Add the ENTITY to the database
                 _context.Users.Add(newUser);
                 _context.SaveChanges();
 

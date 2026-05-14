@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Catpuccino_FinalProject.Models
 {
-    // ✅ DATABASE entity (saved to SQL)
+    //  DATABASE entity (saved to SQL)
     public class Order
     {
         public int Id { get; set; }
@@ -25,7 +25,7 @@ namespace Catpuccino_FinalProject.Models
         public Order Order { get; set; } = null!;
     }
 
-    // ✅ VIEW MODEL (used by Order History page)
+    //  VIEW MODEL (used by Order History page)
     public class UserOrder
     {
         public int Id { get; set; }
@@ -35,7 +35,7 @@ namespace Catpuccino_FinalProject.Models
         public List<CartItemDto> Items { get; set; } = new List<CartItemDto>();
     }
 
-    // ✅ Maps directly to the cart array items in JavaScript
+    //  Maps directly to the cart array items in JavaScript
     public class CartItemDto
     {
         public string Id { get; set; }

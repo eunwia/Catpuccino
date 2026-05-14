@@ -66,7 +66,7 @@ namespace Catpuccino_FinalProject.Controllers
             userInDb.Username = updatedUser.Username;
             userInDb.Email = updatedUser.Email;
 
-            // 3. 🔥 IMPORTANT: update password ONLY if not empty
+            // 3. Update password ONLY if not empty
             if (!string.IsNullOrWhiteSpace(updatedUser.Password))
             {
                 userInDb.Password = updatedUser.Password;

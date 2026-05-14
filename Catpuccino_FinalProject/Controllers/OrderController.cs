@@ -27,7 +27,7 @@ namespace Catpuccino_FinalProject.Controllers
             if (userId == null)
                 return RedirectToAction("Login", "User");
 
-            // ✅ Pull from DB, then map Order → UserOrder (your existing view model)
+            //  Pull from DB, then map Order → UserOrder (your existing view model)
             var orders = _context.Orders
                 .Where(o => o.UserId == userId)
                 .Include(o => o.Items)
@@ -59,7 +59,7 @@ namespace Catpuccino_FinalProject.Controllers
 
             var userId = HttpContext.Session.GetInt32("UserId") ?? 0;
 
-            // ✅ Map CartItemDto → OrderItem when saving to DB
+            //  Map CartItemDto → OrderItem when saving to DB
             var newOrder = new Order
             {
                 Date = DateTime.Now,
