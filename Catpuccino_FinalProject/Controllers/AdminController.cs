@@ -137,8 +137,22 @@ namespace Catpuccino_FinalProject.Controllers
         {
             if (!ModelState.IsValid)
             {
-                TempData["ShowAddModal"] = "true";
-                return RedirectToAction("Products");
+                var vm = new ProductsPageViewModel
+                {
+                    Products = _context.Products.Select(p => new AdminProductModel
+                    {
+                        Id = p.Id,
+                        Name = p.Name,
+                        Category = p.Category,
+                        Description = p.Description,
+                        Price = p.Price,
+                        ImageUrl = p.ImageUrl
+                    }).ToList(),
+                    NewProduct = model,
+                    ShowAddModal = true
+                };
+
+                return View("Products", vm);
             }
 
             string imagePath = "/images/default-product.png";

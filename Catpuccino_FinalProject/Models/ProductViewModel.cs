@@ -15,8 +15,10 @@ namespace Catpuccino_FinalProject.Models
         [Required(ErrorMessage = "Category is required")]
         public string Category { get; set; }
 
+        [Required(ErrorMessage = "Description is required")]
         public string? Description { get; set; }
 
-        public IFormFile? Photo { get; set; }  // ← nullable, fixes the save issue
+        [Required(ErrorMessage = "Photo is required")]
+        public IFormFile? Photo { get; set; } 
     }
 }
