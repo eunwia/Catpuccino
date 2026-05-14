@@ -182,6 +182,17 @@ namespace Catpuccino_FinalProject.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> EditProduct(int Id, string Name, decimal Price, string Category, string Description, IFormFile? Photo)
         {
+            if (Price < 0.01m)
+            {
+                TempData["EditPriceError"] = "Enter a valid price";
+                TempData["EditId"] = Id.ToString();
+                TempData["EditName"] = Name;
+                TempData["EditPrice"] = Price.ToString();
+                TempData["EditCategory"] = Category;
+                TempData["EditDescription"] = Description;
+                return RedirectToAction("Products");
+            }
+
             var product = await _context.Products.FindAsync(Id);
             if (product == null) return NotFound();
 

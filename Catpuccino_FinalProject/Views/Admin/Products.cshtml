@@ -3,6 +3,14 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     ViewData["Title"] = "Products";
     bool showModal = Model.ShowAddModal;
+
+    bool showEditModal = TempData["EditPriceError"] != null;
+    string editPriceError = TempData["EditPriceError"]?.ToString() ?? "";
+    string editId = TempData["EditId"]?.ToString() ?? "";
+    string editName = TempData["EditName"]?.ToString() ?? "";
+    string editPrice = TempData["EditPrice"]?.ToString() ?? "";
+    string editCategory = TempData["EditCategory"]?.ToString() ?? "";
+    string editDescription = TempData["EditDescription"]?.ToString() ?? "";
 }
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -65,37 +73,38 @@
     </div>
 </div>
 
-<div class="add-modal-overlay" id="editProductModal">
+<div class="add-modal-overlay @(showEditModal ? "show" : "")" id="editProductModal">
     <div class="add-modal">
         <h2 class="modal-title">Edit Product Details</h2>
         <form asp-action="EditProduct" asp-controller="Admin" method="post" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
-            <input type="hidden" id="editId" name="Id" />
+            <input type="hidden" id="editId" name="Id" value="@editId" />
 
             <div class="modal-row">
                 <div class="modal-field">
                     <label class="field-label">PRODUCT NAME</label>
-                    <input id="editName" name="Name" class="field-input" required />
+                    <input id="editName" name="Name" class="field-input" value="@editName" required />
                 </div>
                 <div class="modal-field" style="flex: 0 0 140px;">
                     <label class="field-label">PRICE (₱)</label>
-                    <input id="editPrice" name="Price" class="field-input" type="number" step="0.01" required />
+                    <input id="editPrice" name="Price" class="field-input" type="number" step="0.01" min="0.01" value="@editPrice" required />
+                    <span id="editPriceError" class="text-danger small d-block">@editPriceError</span>
                 </div>
             </div>
 
             <div class="modal-field">
                 <label class="field-label">CATEGORY</label>
                 <select id="editCategory" name="Category" class="field-input" required>
-                    <option value="COFFEE">Coffee</option>
-                    <option value="TEA">Tea</option>
-                    <option value="PASTRIES">Pastries</option>
-                    <option value="CAKES">Cakes</option>
+                    <option value="COFFEE" selected="@(editCategory == "COFFEE")">Coffee</option>
+                    <option value="TEA" selected="@(editCategory == "TEA")">Tea</option>
+                    <option value="PASTRIES" selected="@(editCategory == "PASTRIES")">Pastries</option>
+                    <option value="CAKES" selected="@(editCategory == "CAKES")">Cakes</option>
                 </select>
             </div>
 
             <div class="modal-field">
                 <label class="field-label">DESCRIPTION</label>
-                <textarea id="editDescription" name="Description" class="field-textarea" rows="3"></textarea>
+                <textarea id="editDescription" name="Description" class="field-textarea" rows="3">@editDescription</textarea>
             </div>
 
             <div class="modal-field">
@@ -170,9 +179,21 @@
             document.getElementById('editPrice').value = price;
             document.getElementById('editCategory').value = category;
             document.getElementById('editDescription').value = desc;
+            document.getElementById('editPriceError').textContent = '';
             document.getElementById('editProductModal').classList.add('show');
         }
         function closeEditModal() { document.getElementById('editProductModal').classList.remove('show'); }
+
+        document.querySelector('#editProductModal form').addEventListener('submit', function (e) {
+            const price = parseFloat(document.getElementById('editPrice').value);
+            const errorSpan = document.getElementById('editPriceError');
+            if (isNaN(price) || price < 0.01) {
+                e.preventDefault();
+                errorSpan.textContent = 'Enter a valid price';
+            } else {
+                errorSpan.textContent = '';
+            }
+        });
 
         function confirmDelete(id) {
             document.getElementById('deleteForm').action = '/Admin/DeleteProduct/' + id;
@@ -208,7 +229,7 @@
             }
         }
 
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             if (event.target.classList.contains('add-modal-overlay')) {
                 closeAddModal();
                 closeEditModal();
