@@ -75,21 +75,15 @@
 
 ## 👥 Team
 
-<div align="center">
-
-![Project Manager](https://img.shields.io/badge/Project%20Manager-Trixette%20Rain%20A.%20Montallana-c9a87c?style=for-the-badge)
-
-<br/><br/>
-
-**Group Members**<br/>
-Jhon Rovic A. Ramos &nbsp;•&nbsp; Bridget Narte &nbsp;•&nbsp; Roshele Faye Labiaga &nbsp;•&nbsp; John Armand Alvarez
-
-<br/>
+**Project Manager: Trixette Rain A. Montallana**
+**Members:**
+> Jhon Rovic A. Ramos
+> Bridget Narte
+> Roshele Faye Labiaga
+> John Armand Alvarez
 
 ![Subject](https://img.shields.io/badge/Subject-IT--ELNET1%20(27656)-d4b896?style=for-the-badge)
 ![Section](https://img.shields.io/badge/Section-BSIT%203E-e8d5b7?style=for-the-badge)
-
-</div>
 
 <div align="center">
 <img src="https://capsule-render.vercel.app/api?type=waving&color=c9a87c&height=80&section=footer"/>
