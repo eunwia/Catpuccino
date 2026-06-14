@@ -44,7 +44,7 @@
 
 ## 🛠️ Tech Stack
 
-<div align="center">
+<div>
 
 ![ASP.NET Core MVC](https://img.shields.io/badge/ASP.NET_Core-MVC-c9a87c?style=for-the-badge&logo=dotnet&logoColor=6e6e6e)
 ![C#](https://img.shields.io/badge/C%23-d4b896?style=for-the-badge&logo=csharp&logoColor=6e6e6e)
