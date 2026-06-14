@@ -1,6 +1,8 @@
 <div align="center">
 
 <img src="cat-text.png" alt="Catpuccino" width="400" />
+
+# Catpuccino
 ![POS System](https://img.shields.io/badge/POS-System-c9a87c?style=for-the-badge)
 ![Cafe Management](https://img.shields.io/badge/Cafe-Management-d4b896?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Completed-e8d5b7?style=for-the-badge)
@@ -27,7 +29,7 @@
       <sub>🏠 Home Page</sub>
     </td>
     <td align="center" style="border: none; padding: 8px;">
-      <img src="cat-menu.png" alt="Cafe Menu" width="280" style="border-radius: 10px;" />
+      <img src="cafe-menu.png" alt="Cafe Menu" width="280" style="border-radius: 10px;" />
       <br/>
       <sub>🍰 Cafe Menu</sub>
     </td>
