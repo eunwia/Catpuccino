@@ -75,6 +75,9 @@
 
 ## 👥 Team
 
+![Subject](https://img.shields.io/badge/Subject-IT--ELNET1%20(27656)-d4b896?style=for-the-badge)
+![Section](https://img.shields.io/badge/Section-BSIT%203E-e8d5b7?style=for-the-badge)
+
 **Project Manager:** 
 > Trixette Rain A. Montallana
 
@@ -83,9 +86,6 @@
 > Bridget Narte<br/>
 > Roshele Faye Labiaga<br/>
 > John Armand Alvarez
-
-![Subject](https://img.shields.io/badge/Subject-IT--ELNET1%20(27656)-d4b896?style=for-the-badge)
-![Section](https://img.shields.io/badge/Section-BSIT%203E-e8d5b7?style=for-the-badge)
 
 <div align="center">
 <img src="https://capsule-render.vercel.app/api?type=waving&color=c9a87c&height=80&section=footer"/>
