@@ -77,6 +77,7 @@
 
 **Project Manager:** 
 > Trixette Rain A. Montallana
+
 **Members:**
 > Jhon Rovic A. Ramos<br/>
 > Bridget Narte<br/>
