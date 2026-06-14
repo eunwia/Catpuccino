@@ -29,7 +29,7 @@
       <sub>🏠 Home Page</sub>
     </td>
     <td align="center" style="border: none; padding: 8px;">
-      <img src="cafe-menu.png" alt="Cafe Menu" width="280" style="border-radius: 10px;" />
+      <img src="cat-menu.png" alt="Cafe Menu" width="280" style="border-radius: 10px;" />
       <br/>
       <sub>🍰 Cafe Menu</sub>
     </td>
