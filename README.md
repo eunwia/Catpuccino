@@ -1,5 +1,4 @@
 <div align="center">
-
 <img src="cat-text.png" alt="Catpuccino" width="400" />
 
 # Catpuccino
@@ -8,7 +7,6 @@
 ![Status](https://img.shields.io/badge/Status-Completed-e8d5b7?style=for-the-badge)
 
 *A specialized Point of Sale and Management System designed for cat cafes. Catpuccino streamlines ordering, and inventory tracking.*
-
 </div>
 
 ---
@@ -73,12 +71,42 @@
 
 ---
 
+## 🚀 How to Run
+
+**1. Open the project in Visual Studio**
+
+**2. Open the Package Manager Console**
+> Go to `Tools` → `NuGet Package Manager` → `Package Manager Console`
+
+**3. Run the migration command**
+```
+Add-Migration InitialCreate
+```
+
+**4. Apply the database**
+```
+Update-Database
+```
+
+**5. Launch the application** — you're all set! 🎉
+
+<br/>
+
+**🔐 Admin Login Credentials**
+
+| Field | Value |
+|---|---|
+| Username | `admin` |
+| Password | `admin123` |
+
+---
+
 ## 👥 Team
 
 ![Subject](https://img.shields.io/badge/Subject-IT--ELNET1%20(27656)-d4b896?style=for-the-badge)
 ![Section](https://img.shields.io/badge/Section-BSIT%203E-e8d5b7?style=for-the-badge)
 
-**Project Manager:** 
+**Project Manager:**
 > Trixette Rain A. Montallana
 
 **Members:**
